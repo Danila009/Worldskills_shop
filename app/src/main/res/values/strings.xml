@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Worldskills shop</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="basket">корзина</string>
+    <string name="MyProfile">мой профиль</string>
+    <string name="home">Главная</string>
+    <string name="addingAds">добавление объявлений</string>
+</resources>
