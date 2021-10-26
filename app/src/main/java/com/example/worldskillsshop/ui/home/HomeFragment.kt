@@ -1,20 +1,17 @@
 package com.example.worldskillsshop.ui.home
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.worldskillbank.adapter_RV.adapter_cards
 import com.example.worldskillbank.data_history_RV.bank_cards
+import com.example.worldskillsshop.db.MuDbManager
 import com.example.worldskillsshop.R
 import com.example.worldskillsshop.databinding.DialogAddingAnnouncedBinding
 import com.example.worldskillsshop.databinding.FragmentHomeBinding
@@ -28,10 +25,13 @@ class HomeFragment : Fragment() {
     private val adapter = adapter_cards()
     val imageReguestCode = 10
 
+    val myDbManager = MuDbManager(this)
+
     var title = ""
     var price = 0
 
     private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,6 +48,7 @@ class HomeFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar!!.title = "Главная"
         setHasOptionsMenu(true)
 
+
         return root
     }
 
@@ -55,6 +56,9 @@ class HomeFragment : Fragment() {
 
         binding.RV.layoutManager = GridLayoutManager(this.context, 2)
         binding.RV.adapter = adapter
+
+        myDbManager.openDb()
+        myDbManager.insertToDb(id, price.toString(),title)
 
         val card = bank_cards(price,id,title)
         adapter.addCard(card)
@@ -132,6 +136,11 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        myDbManager.closeDb()
     }
 
 }
