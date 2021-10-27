@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
     private val adapter = adapter_cards()
     val imageReguestCode = 10
 
-    val myDbManager = MuDbManager(this)
+    //val myDbManager = MuDbManager(this)
 
     var title = ""
     var price = 0
@@ -46,8 +46,48 @@ class HomeFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         (activity as AppCompatActivity).supportActionBar!!.title = "Главная"
-        setHasOptionsMenu(true)
 
+        binding.floatingActionButton.setOnClickListener {
+
+
+            val dialogBuilder = android.app.AlertDialog.Builder(this.context)
+            val bindingChange = DialogAddingAnnouncedBinding.inflate(layoutInflater)
+            dialogBuilder.setView(bindingChange.root)
+
+            val dialog: android.app.AlertDialog = dialogBuilder.show()
+
+            val proceed_but_dialog = dialog.findViewById<Button>(R.id.proceed_but_dialog)
+            val title_dialog = dialog.findViewById<TextView>(R.id.title_dialog)
+            val price_dialog = dialog.findViewById<TextView>(R.id.price_dialog)
+            val Cancel_but_dialog = dialog.findViewById<Button>(R.id.Cancel_but_dialog)
+
+
+            proceed_but_dialog.setOnClickListener {
+
+                dialog.dismiss()
+
+                if (title_dialog.text.toString().isNotEmpty() && price_dialog.text.toString().isNotEmpty())
+                {
+                    title = title_dialog.text.toString()
+                    price = price_dialog.text.toString().toInt()
+
+                    val intent = Intent()
+                    intent.type = "image/*"
+                    intent.action = Intent.ACTION_GET_CONTENT
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"),
+                        imageReguestCode)
+                }
+            }
+
+            Cancel_but_dialog.setOnClickListener {
+
+                dialog.dismiss()
+            }
+
+            dialog.setCancelable(true)
+            dialog.window?.setBackgroundDrawableResource(R.drawable.krujok)
+
+        }
 
         return root
     }
@@ -57,71 +97,14 @@ class HomeFragment : Fragment() {
         binding.RV.layoutManager = GridLayoutManager(this.context, 2)
         binding.RV.adapter = adapter
 
-        myDbManager.openDb()
-        myDbManager.insertToDb(id, price.toString(),title)
+        //myDbManager.openDb()
+        //myDbManager.insertToDb(id, price.toString(),title)
 
         val card = bank_cards(price,id,title)
         adapter.addCard(card)
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
-    {
-        inflater.inflate(R.menu.addin_ads, menu);
-        super.onCreateOptionsMenu(menu,inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean
-    {
-        val id = item.itemId
-        when (id)
-        {
-            R.id.addingAds ->
-            {
-
-                val dialogBuilder = android.app.AlertDialog.Builder(this.context)
-                val bindingChange = DialogAddingAnnouncedBinding.inflate(layoutInflater)
-                dialogBuilder.setView(bindingChange.root)
-
-                val dialog: android.app.AlertDialog = dialogBuilder.show()
-
-                val proceed_but_dialog = dialog.findViewById<Button>(R.id.proceed_but_dialog)
-                val title_dialog = dialog.findViewById<TextView>(R.id.title_dialog)
-                val price_dialog = dialog.findViewById<TextView>(R.id.price_dialog)
-                val Cancel_but_dialog = dialog.findViewById<Button>(R.id.Cancel_but_dialog)
-
-
-                proceed_but_dialog.setOnClickListener {
-
-                    dialog.dismiss()
-
-                    if (title_dialog.text.toString().isNotEmpty() && price_dialog.text.toString().isNotEmpty())
-                    {
-                        title = title_dialog.text.toString()
-                        price = price_dialog.text.toString().toInt()
-
-                        val intent = Intent()
-                        intent.type = "image/*"
-                        intent.action = Intent.ACTION_GET_CONTENT
-                        startActivityForResult(Intent.createChooser(intent, "Select Picture"),
-                            imageReguestCode)
-                    }
-                }
-
-                Cancel_but_dialog.setOnClickListener {
-
-                    dialog.dismiss()
-                }
-
-                dialog.setCancelable(true)
-                dialog.window?.setBackgroundDrawableResource(R.drawable.krujok)
-
-
-
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -140,7 +123,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        myDbManager.closeDb()
+        //myDbManager.closeDb()
     }
 
 }
