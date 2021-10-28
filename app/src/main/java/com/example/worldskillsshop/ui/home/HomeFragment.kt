@@ -2,6 +2,7 @@ package com.example.worldskillsshop.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
@@ -13,6 +14,8 @@ import com.example.worldskillbank.adapter_RV.adapter_cards
 import com.example.worldskillbank.data_history_RV.bank_cards
 import com.example.worldskillsshop.db.MuDbManager
 import com.example.worldskillsshop.R
+import com.example.worldskillsshop.RV_variables
+import com.example.worldskillsshop.databinding.AnnouncementRvBinding
 import com.example.worldskillsshop.databinding.DialogAddingAnnouncedBinding
 import com.example.worldskillsshop.databinding.FragmentHomeBinding
 import java.io.IOException
@@ -21,6 +24,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
+
 
     private val adapter = adapter_cards()
     val imageReguestCode = 10
@@ -32,6 +36,7 @@ class HomeFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+    private var binding_rv: AnnouncementRvBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,8 +49,16 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        binding_rv = AnnouncementRvBinding.inflate(inflater, container, false)
+        val but_rv = RV_variables(binding_rv!!.root)
+
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         (activity as AppCompatActivity).supportActionBar!!.title = "Главная"
+
+        but_rv.but?.setOnClickListener {
+
+            Log.d("TEST","llllllllllLLLLLLLLLLLL")
+        }
 
         binding.floatingActionButton.setOnClickListener {
 
@@ -61,6 +74,11 @@ class HomeFragment : Fragment() {
             val price_dialog = dialog.findViewById<TextView>(R.id.price_dialog)
             val Cancel_but_dialog = dialog.findViewById<Button>(R.id.Cancel_but_dialog)
 
+
+            binding_rv!!.basketBut.setOnClickListener {
+
+                Log.d("TEST","LLLLLLLLLLLLLLLLLLLLLLLLLL")
+            }
 
             proceed_but_dialog.setOnClickListener {
 
@@ -88,9 +106,9 @@ class HomeFragment : Fragment() {
             dialog.window?.setBackgroundDrawableResource(R.drawable.krujok)
 
         }
-
-        return root
+        return (root)
     }
+
 
     fun addingAds(id:String){
 

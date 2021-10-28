@@ -7,4 +7,9 @@
     <string name="MyProfile">мой профиль</string>
     <string name="home">Главная</string>
     <string name="addingAds">добавление объявлений</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Notifications">Уведомления</string>
+    <string name="Delete_history">Delete_history</string>
+    <string name="Change_user">Сменить пользователя</string>
 </resources>

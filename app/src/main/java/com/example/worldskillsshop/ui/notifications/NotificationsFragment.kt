@@ -8,8 +8,10 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.findFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.worldskillsshop.R
 import com.example.worldskillsshop.databinding.FragmentNotificationsBinding
 
@@ -30,7 +32,7 @@ class NotificationsFragment : Fragment() {
         notificationsViewModel =
             ViewModelProvider(this).get(NotificationsViewModel::class.java)
 
-        list.add("  Обьявления")
+        list.add("  Объявления ")
         list.add("  Заказы")
         list.add("  Сообщения")
         list.add("  Отзывы")
@@ -46,6 +48,20 @@ class NotificationsFragment : Fragment() {
             R.layout.text_color_white,
             list
         )
+
+        binding.List.setOnItemClickListener{_, view, i, _ ->
+
+            when(i){
+                0-> view.findNavController().navigate(R.id.ads_frag)
+                1-> view.findNavController().navigate(R.id.orders_frag)
+                2-> view.findNavController().navigate(R.id.posts_frag)
+                3-> view.findNavController().navigate(R.id.reviews_frag)
+                4-> view.findNavController().navigate(R.id.favorites_frag)
+                5-> view.findNavController().navigate(R.id.coupons_frag)
+                6-> view.findNavController().navigate(R.id.settings_frag)
+            }
+            list.clear()
+        }
 
         return root
     }
