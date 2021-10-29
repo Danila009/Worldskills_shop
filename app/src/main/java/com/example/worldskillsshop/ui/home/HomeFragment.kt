@@ -1,6 +1,9 @@
 package com.example.worldskillsshop.ui.home
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -12,12 +15,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.worldskillbank.adapter_RV.adapter_cards
 import com.example.worldskillbank.data_history_RV.bank_cards
-import com.example.worldskillsshop.db.MuDbManager
 import com.example.worldskillsshop.R
-import com.example.worldskillsshop.RV_variables
 import com.example.worldskillsshop.databinding.AnnouncementRvBinding
 import com.example.worldskillsshop.databinding.DialogAddingAnnouncedBinding
 import com.example.worldskillsshop.databinding.FragmentHomeBinding
+import com.example.worldskillsshop.db.MuDbManager
 import java.io.IOException
 
 class HomeFragment : Fragment() {
@@ -25,18 +27,14 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
 
+    var thiscontext: Context? = null
 
-    private val adapter = adapter_cards()
     val imageReguestCode = 10
-
-    //val myDbManager = MuDbManager(this)
 
     var title = ""
     var price = 0
 
     private val binding get() = _binding!!
-
-    private var binding_rv: AnnouncementRvBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,16 +47,12 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding_rv = AnnouncementRvBinding.inflate(inflater, container, false)
-        val but_rv = RV_variables(binding_rv!!.root)
+
+        thiscontext = container?.context
 
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         (activity as AppCompatActivity).supportActionBar!!.title = "Главная"
-
-        but_rv.but?.setOnClickListener {
-
-            Log.d("TEST","llllllllllLLLLLLLLLLLL")
-        }
+        (activity as AppCompatActivity).supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#141414")))
 
         binding.floatingActionButton.setOnClickListener {
 
@@ -74,11 +68,6 @@ class HomeFragment : Fragment() {
             val price_dialog = dialog.findViewById<TextView>(R.id.price_dialog)
             val Cancel_but_dialog = dialog.findViewById<Button>(R.id.Cancel_but_dialog)
 
-
-            binding_rv!!.basketBut.setOnClickListener {
-
-                Log.d("TEST","LLLLLLLLLLLLLLLLLLLLLLLLLL")
-            }
 
             proceed_but_dialog.setOnClickListener {
 
@@ -112,7 +101,9 @@ class HomeFragment : Fragment() {
 
     fun addingAds(id:String){
 
-        binding.RV.layoutManager = GridLayoutManager(this.context, 2)
+        val adapter = adapter_cards(thiscontext!!)
+        val myDbManager = MuDbManager(thiscontext!!)
+        binding.RV.layoutManager = GridLayoutManager(thiscontext!!, 2)
         binding.RV.adapter = adapter
 
         //myDbManager.openDb()
@@ -141,7 +132,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        //val myDbManager = MuDbManager(thiscontext!!)
         //myDbManager.closeDb()
     }
-
 }
