@@ -5,27 +5,37 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import androidx.navigation.findNavController
 import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.worldskillbank.adapter_RV.adapter_cards
 import com.example.worldskillbank.data_history_RV.bank_cards
+import com.example.worldskillsshop.MainActivity
+import com.example.worldskillsshop.OpenAds
 import com.example.worldskillsshop.R
+import com.example.worldskillsshop.databinding.ActivityMainBinding
 import com.example.worldskillsshop.databinding.AnnouncementRvBinding
 import com.example.worldskillsshop.databinding.DialogAddingAnnouncedBinding
 import com.example.worldskillsshop.databinding.FragmentHomeBinding
 import com.example.worldskillsshop.db.MuDbManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.IOException
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
+
 
     var thiscontext: Context? = null
 
@@ -46,6 +56,7 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
 
 
         thiscontext = container?.context
@@ -128,6 +139,14 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    fun adapter(){
+
+        view?.findNavController()?.navigate(R.id.nav_host_fragment_activity_main)
+        Log.d("sfsDSASDVd","ajdabhvapdvuhibpshviYAFDPBI")
+
+        MainActivity().navView?.setupWithNavController(navController)
     }
 
     override fun onDestroy() {

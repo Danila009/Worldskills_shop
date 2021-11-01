@@ -7,13 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.worldskillbank.data_history_RV.bank_cards
 import com.example.worldskillsshop.MainActivity
 import com.example.worldskillsshop.MyIntent
+import com.example.worldskillsshop.OpenAds
 import com.example.worldskillsshop.R
 import com.example.worldskillsshop.databinding.AnnouncementRvBinding
 import com.example.worldskillsshop.ui.dashboard.DashboardFragment
+import com.example.worldskillsshop.ui.home.HomeFragment
 import com.example.worldskillsshop.ui.notifications.NotificationsFragment
 
 class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.CardHolder>() {
@@ -36,13 +39,17 @@ class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.Card
 
             basketBut.setOnClickListener {
 
-                val Intent = Intent(context, DashboardFragment::class.java).apply {
+
+
+                HomeFragment().adapter()
+
+                /*val Intent = Intent(context, OpenAds::class.java).apply {
 
                     putExtra(MyIntent.I_price, card.price)
                     putExtra(MyIntent.I_productPhoto, card.productPhoto)
                     putExtra(MyIntent.I_titleAnnouncement, card.titleAnnouncement)
                 }
-                context.startActivity(Intent)
+                context.startActivity(Intent)*/
             }
 
             heart.setOnClickListener {
