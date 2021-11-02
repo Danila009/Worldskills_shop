@@ -20,9 +20,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.worldskillbank.adapter_RV.adapter_cards
 import com.example.worldskillbank.data_history_RV.bank_cards
-import com.example.worldskillsshop.MainActivity
-import com.example.worldskillsshop.OpenAds
-import com.example.worldskillsshop.R
+import com.example.worldskillsshop.*
 import com.example.worldskillsshop.databinding.ActivityMainBinding
 import com.example.worldskillsshop.databinding.AnnouncementRvBinding
 import com.example.worldskillsshop.databinding.DialogAddingAnnouncedBinding
@@ -43,6 +41,8 @@ class HomeFragment : Fragment() {
 
     var title = ""
     var price = 0
+
+    var rv = 0
 
     private val binding get() = _binding!!
 
@@ -65,8 +65,10 @@ class HomeFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar!!.title = "Главная"
         (activity as AppCompatActivity).supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#141414")))
 
+
         binding.floatingActionButton.setOnClickListener {
 
+            com.example.worldskillsshop.Intent().open(thiscontext!!)
 
             val dialogBuilder = android.app.AlertDialog.Builder(this.context)
             val bindingChange = DialogAddingAnnouncedBinding.inflate(layoutInflater)
@@ -110,6 +112,7 @@ class HomeFragment : Fragment() {
     }
 
 
+
     fun addingAds(id:String){
 
         val adapter = adapter_cards(thiscontext!!)
@@ -120,7 +123,7 @@ class HomeFragment : Fragment() {
         //myDbManager.openDb()
         //myDbManager.insertToDb(id, price.toString(),title)
 
-        val card = bank_cards(price,id,title)
+        val card = bank_cards(price.toString(),id,title)
         adapter.addCard(card)
 
     }
@@ -141,12 +144,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun adapter(){
 
-        view?.findNavController()?.navigate(R.id.nav_host_fragment_activity_main)
-        Log.d("sfsDSASDVd","ajdabhvapdvuhibpshviYAFDPBI")
-
-        MainActivity().navView?.setupWithNavController(navController)
+    companion object{
+        fun newInstance() = Posts_frag.newInstance()
     }
 
     override fun onDestroy() {

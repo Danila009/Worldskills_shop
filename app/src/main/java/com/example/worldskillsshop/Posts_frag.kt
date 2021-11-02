@@ -60,4 +60,7 @@ class Posts_frag : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
+    companion object{
+        fun newInstance() = Posts_frag()
+    }
 }

@@ -1,5 +1,8 @@
 package com.example.worldskillsshop
 
+import android.app.PendingIntent.getActivity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.service.controls.Control
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -9,6 +12,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.worldskillsshop.Coupons_frag.Companion.newInstance
+import com.example.worldskillsshop.Favorites_frag.Companion.newInstance
 import com.example.worldskillsshop.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -37,4 +42,13 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView!!.setupWithNavController(navController)
     }
+
 }
+
+
+
+
+
+
+
+
