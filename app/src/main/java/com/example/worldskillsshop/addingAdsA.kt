@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.net.toUri
 import com.example.worldskillsshop.databinding.ActivityAddingAdsBinding
+import com.example.worldskillsshop.db.AdsDBManager
+import com.example.worldskillsshop.ui.home.HomeFragment
 import java.io.IOException
 
 class addingAdsA : AppCompatActivity() {
@@ -28,6 +30,8 @@ class addingAdsA : AppCompatActivity() {
     var AddImageProver_2 = false
     var AddImageProver_3 = false
 
+    val myDbManager = AdsDBManager(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_adding_ads)
@@ -35,6 +39,7 @@ class addingAdsA : AppCompatActivity() {
         binding = ActivityAddingAdsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        myDbManager.openDb()
 
         binding.butAddImage.setOnClickListener {
 
@@ -92,46 +97,53 @@ class addingAdsA : AppCompatActivity() {
                 && binding.Description.text.isNotEmpty()
                 && int_image != 0){
 
-                val intent = Intent(this, MainActivity::class.java).apply {
-
-                    putExtra(MyIntent.I_titleADS, binding.titleADS.text)
-                    putExtra(MyIntent.I_PriceADS, binding.PriceADS.text)
-                    putExtra(MyIntent.I_Phone, binding.Phone.text)
-                    putExtra(MyIntent.I_Description, binding.Description.text)
+                val intent = Intent(this, MainActivity::class.java)
 
                     if (AddImageProver){
-                        putExtra(MyIntent.AddImage_1, AddImage)
+                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
+                                                binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
+                                                "0","0","0")
                     } else if (AddImageProver_1){
-                        putExtra(MyIntent.AddImage_2, AddImage_1)
+                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
+                                                binding.Description.text.toString(),binding.Phone.text.toString(),"0",
+                                                AddImage_1,"0","0")
                     } else if (AddImageProver_2){
-                        putExtra(MyIntent.AddImage_3, AddImage_2)
+                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
+                                                binding.Description.text.toString(),binding.Phone.text.toString(),"0",
+                                                "0",AddImage_2,"0")
                     } else if (AddImageProver_3){
-                        putExtra(MyIntent.AddImage_4, AddImage_3)
+                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
+                                                binding.Description.text.toString(),binding.Phone.text.toString(),"0",
+                                                "0","0",AddImage_3)
                     }else if (AddImageProver && AddImageProver_1){
-                        putExtra(MyIntent.AddImage_1, AddImage)
-                        putExtra(MyIntent.AddImage_2, AddImage_1)
+                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
+                                                binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
+                                                AddImage_1,"0","0")
                     } else if (AddImageProver_2 && AddImageProver_3){
-                        putExtra(MyIntent.AddImage_3, AddImage_2)
-                        putExtra(MyIntent.AddImage_4, AddImage_3)
+                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
+                                                binding.Description.text.toString(),binding.Phone.text.toString(),"0",
+                                                "0",AddImage_2,AddImage_3)
                     }else if (AddImageProver && AddImageProver_2){
-                        putExtra(MyIntent.AddImage_1, AddImage)
-                        putExtra(MyIntent.AddImage_3, AddImage_2)
+                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
+                                                binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
+                                                "0",AddImage_2,"0")
                     }else if (AddImageProver_1 && AddImageProver_3){
-                        putExtra(MyIntent.AddImage_2, AddImage_1)
-                        putExtra(MyIntent.AddImage_4, AddImage_3)
+                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
+                                                binding.Description.text.toString(),binding.Phone.text.toString(),"0",
+                                                AddImage_1,"0",AddImage_3)
                     }else if (AddImageProver && AddImageProver_3 ){
-                        putExtra(MyIntent.AddImage_1, AddImage)
-                        putExtra(MyIntent.AddImage_4, AddImage_3)
+                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
+                                                binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
+                                                "0","0",AddImage_3)
                     }else if (AddImageProver_1 && AddImageProver_2){
-                        putExtra(MyIntent.AddImage_2, AddImage_1)
-                        putExtra(MyIntent.AddImage_3, AddImage_2)
+                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
+                                                binding.Description.text.toString(),binding.Phone.text.toString(),"0",
+                                                AddImage_1,AddImage_2,"0")
                     }else{
-                        putExtra(MyIntent.AddImage_1, AddImage)
-                        putExtra(MyIntent.AddImage_2, AddImage_1)
-                        putExtra(MyIntent.AddImage_3, AddImage_2)
-                        putExtra(MyIntent.AddImage_4, AddImage_3)
+                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
+                                                binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
+                                                AddImage_1,AddImage_2,AddImage_3)
                     }
-                }
                 startActivity(intent)
             }
         }
@@ -149,6 +161,10 @@ class addingAdsA : AppCompatActivity() {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        myDbManager.closeDb()
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

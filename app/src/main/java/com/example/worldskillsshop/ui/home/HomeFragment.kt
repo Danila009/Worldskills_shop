@@ -43,6 +43,7 @@ class HomeFragment : Fragment() {
     var price = 0
 
     var rv = 0
+    var image = ""
 
     private val binding get() = _binding!!
 
@@ -64,6 +65,7 @@ class HomeFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         (activity as AppCompatActivity).supportActionBar!!.title = "Главная"
         (activity as AppCompatActivity).supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#141414")))
+
 
 
         binding.floatingActionButton.setOnClickListener {
@@ -115,15 +117,16 @@ class HomeFragment : Fragment() {
 
     fun addingAds(id:String){
 
-        val adapter = adapter_cards(thiscontext!!)
+
         val myDbManager = MuDbManager(thiscontext!!)
+        val adapter = adapter_cards(thiscontext!!)
         binding.RV.layoutManager = GridLayoutManager(thiscontext!!, 2)
         binding.RV.adapter = adapter
 
         //myDbManager.openDb()
         //myDbManager.insertToDb(id, price.toString(),title)
 
-        val card = bank_cards(price.toString(),id,title)
+        val card = bank_cards("","","")
         adapter.addCard(card)
 
     }
@@ -136,6 +139,7 @@ class HomeFragment : Fragment() {
                 if (data != null) {
                     try {
                         addingAds(data.data.toString())
+                        image = data.data.toString()
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }

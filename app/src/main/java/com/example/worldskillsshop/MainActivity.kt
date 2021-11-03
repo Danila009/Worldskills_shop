@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     var navView:BottomNavigationView? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+        override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
