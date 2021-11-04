@@ -12,7 +12,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.worldskillsshop.Coupons_frag.Companion.newInstance
 import com.example.worldskillsshop.Favorites_frag.Companion.newInstance
 import com.example.worldskillsshop.databinding.ActivityMainBinding
 

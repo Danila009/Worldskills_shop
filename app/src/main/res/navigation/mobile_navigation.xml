@@ -115,4 +115,9 @@
         android:name="com.example.worldskillsshop.addingAdsA"
         android:label="activity_adding_ads"
         tools:layout="@layout/activity_adding_ads" />
+    <activity
+        android:id="@+id/dialogueOpen"
+        android:name="com.example.worldskillsshop.DialogueOpen"
+        android:label="activity_dialogue_open"
+        tools:layout="@layout/activity_dialogue_open" />
 </navigation>

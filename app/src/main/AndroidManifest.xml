@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WorldskillsShop">
         <activity
+            android:name=".DialogueOpen"
+            android:exported="true" />
+        <activity
             android:name=".addingAdsA"
             android:exported="true" />
         <activity

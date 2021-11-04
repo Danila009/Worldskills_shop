@@ -1,9 +1,13 @@
 package com.example.worldskillsshop
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import androidx.appcompat.app.ActionBar
 import androidx.core.net.toUri
 import com.example.worldskillsshop.databinding.ActivityAddingAdsBinding
 import com.example.worldskillsshop.db.AdsDBManager
@@ -32,12 +36,19 @@ class addingAdsA : AppCompatActivity() {
 
     val myDbManager = AdsDBManager(this)
 
+    var bar:ActionBar? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_adding_ads)
 
         binding = ActivityAddingAdsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        bar = supportActionBar
+        bar?.setDisplayHomeAsUpEnabled(true)
+        bar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#141414")))
+        bar?.title = "Добавить объявление"
 
         myDbManager.openDb()
 
@@ -164,6 +175,13 @@ class addingAdsA : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         myDbManager.closeDb()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> finish()
+        }
+        return true
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

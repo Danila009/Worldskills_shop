@@ -72,43 +72,6 @@ class HomeFragment : Fragment() {
 
             com.example.worldskillsshop.Intent().open(thiscontext!!)
 
-            val dialogBuilder = android.app.AlertDialog.Builder(this.context)
-            val bindingChange = DialogAddingAnnouncedBinding.inflate(layoutInflater)
-            dialogBuilder.setView(bindingChange.root)
-
-            val dialog: android.app.AlertDialog = dialogBuilder.show()
-
-            val proceed_but_dialog = dialog.findViewById<Button>(R.id.proceed_but_dialog)
-            val title_dialog = dialog.findViewById<TextView>(R.id.title_dialog)
-            val price_dialog = dialog.findViewById<TextView>(R.id.price_dialog)
-            val Cancel_but_dialog = dialog.findViewById<Button>(R.id.Cancel_but_dialog)
-
-
-            proceed_but_dialog.setOnClickListener {
-
-                dialog.dismiss()
-
-                if (title_dialog.text.toString().isNotEmpty() && price_dialog.text.toString().isNotEmpty())
-                {
-                    title = title_dialog.text.toString()
-                    price = price_dialog.text.toString().toInt()
-
-                    val intent = Intent()
-                    intent.type = "image/*"
-                    intent.action = Intent.ACTION_GET_CONTENT
-                    startActivityForResult(Intent.createChooser(intent, "Select Picture"),
-                        imageReguestCode)
-                }
-            }
-
-            Cancel_but_dialog.setOnClickListener {
-
-                dialog.dismiss()
-            }
-
-            dialog.setCancelable(true)
-            dialog.window?.setBackgroundDrawableResource(R.drawable.krujok)
-
         }
         return (root)
     }

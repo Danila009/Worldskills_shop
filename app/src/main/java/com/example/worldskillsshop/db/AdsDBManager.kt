@@ -6,7 +6,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import java.util.ArrayList
 
-class AdsDBManager(context: Context) {
+class AdsDBManager(val context: Context) {
 
     val AdsDBHelper = com.example.worldskillsshop.db.AdsDBHelper(context)
     var db: SQLiteDatabase? = null
@@ -22,10 +22,10 @@ class AdsDBManager(context: Context) {
             put(AdsDBNameClass.PriceADS, PriceADS)
             put(AdsDBNameClass.Description, Description)
             put(AdsDBNameClass.Phone, Phone)
-            put(AdsDBNameClass.AddImage, AddImage)
-            put(AdsDBNameClass.AddImage_1, AddImage_1)
-            put(AdsDBNameClass.AddImage_2, AddImage_2)
-            put(AdsDBNameClass.AddImage_3, AddImage_3)
+            put(AdsDBNameClass.AddImageA, AddImage)
+            put(AdsDBNameClass.AddImageB, AddImage_1)
+            put(AdsDBNameClass.AddImageC, AddImage_2)
+            put(AdsDBNameClass.AddImageD, AddImage_3)
         }
 
         db?.insert(AdsDBNameClass.TABLE_NAME, null, values)
@@ -42,10 +42,10 @@ class AdsDBManager(context: Context) {
 
         while (cursor?.moveToNext()!!){
             val COLUMN_titleADS = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.COLUMN_titleADS))
-            val AddImage = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.AddImage))
-            val AddImage_1 = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.AddImage_1))
-            val AddImage_2 = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.AddImage_2))
-            val AddImage_3 = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.AddImage_3))
+            val AddImage = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.AddImageA))
+            val AddImage_1 = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.AddImageB))
+            val AddImage_2 = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.AddImageC))
+            val AddImage_3 = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.AddImageD))
             val PriceADS = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.PriceADS))
             val Description = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.Description))
             val Phone = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.Phone))
