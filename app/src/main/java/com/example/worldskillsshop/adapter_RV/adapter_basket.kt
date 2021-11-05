@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
-import com.example.worldskillbank.adapter_RV.adapter_cards
-import com.example.worldskillbank.data_history_RV.bank_cards
 import com.example.worldskillsshop.R
 import com.example.worldskillsshop.data_history_RV.basket
 import com.example.worldskillsshop.databinding.BasketRvBinding

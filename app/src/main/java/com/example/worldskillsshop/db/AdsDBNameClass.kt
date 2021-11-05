@@ -14,6 +14,7 @@ object AdsDBNameClass {
     const val COLUMN_titleADS = "title"
     const val Phone = "Phone"
     const val Description = "Description"
+    const val ID = BaseColumns._ID
 
 
     const val DATABASE_VERSION = 120  //версия

@@ -5,29 +5,19 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import androidx.navigation.findNavController
 import android.util.Log
 import android.view.*
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.worldskillbank.adapter_RV.adapter_cards
-import com.example.worldskillbank.data_history_RV.bank_cards
+import com.example.worldskillsshop.adapter_RV.adapter_cards
+import com.example.worldskillsshop.data_history_RV.bank_cards
 import com.example.worldskillsshop.*
-import com.example.worldskillsshop.databinding.ActivityMainBinding
-import com.example.worldskillsshop.databinding.AnnouncementRvBinding
-import com.example.worldskillsshop.databinding.DialogAddingAnnouncedBinding
 import com.example.worldskillsshop.databinding.FragmentHomeBinding
-import com.example.worldskillsshop.db.MuDbManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.worldskillsshop.db.AdsDBManager
 import java.io.IOException
+import java.util.ArrayList
 
 class HomeFragment : Fragment() {
 
@@ -45,6 +35,16 @@ class HomeFragment : Fragment() {
     var rv = 0
     var image = ""
 
+    var Id = ArrayList<String>()
+    var Phone = ArrayList<String>()
+    var PriceADS = ArrayList<String>()
+    var Description = ArrayList<String>()
+    var COLUMN_titleADS = ArrayList<String>()
+    var AddImage = ArrayList<String>()
+    var AddImage_1 = ArrayList<String>()
+    var AddImage_2 = ArrayList<String>()
+    var AddImage_3 = ArrayList<String>()
+
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -52,73 +52,61 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+        (activity as AppCompatActivity).supportActionBar!!.title = "Главная"
+        (activity as AppCompatActivity).supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#141414")))
+
         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
-
         thiscontext = container?.context
 
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
-        (activity as AppCompatActivity).supportActionBar!!.title = "Главная"
-        (activity as AppCompatActivity).supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#141414")))
-
-
+        DB()
 
         binding.floatingActionButton.setOnClickListener {
-
             com.example.worldskillsshop.Intent().open(thiscontext!!)
-
         }
         return (root)
     }
 
+    fun DB(){
+        val myDbManager = AdsDBManager(thiscontext!!)
+        myDbManager.openDb()
+        Id = myDbManager.readDbDate("Id")
+        Phone = myDbManager.readDbDate("Phone")
+        PriceADS = myDbManager.readDbDate("PriceADS")
+        Description = myDbManager.readDbDate("Description")
+        COLUMN_titleADS = myDbManager.readDbDate("COLUMN_titleADS")
+        AddImage = myDbManager.readDbDate("AddImage")
+        AddImage_1 = myDbManager.readDbDate("AddImage_1")
+        AddImage_2 = myDbManager.readDbDate("AddImage_2")
+        AddImage_3 = myDbManager.readDbDate("AddImage_3")
+        var i = Id.size
 
+        while (i > 0){
 
-    fun addingAds(id:String){
-
-
-        val myDbManager = MuDbManager(thiscontext!!)
-        val adapter = adapter_cards(thiscontext!!)
-        binding.RV.layoutManager = GridLayoutManager(thiscontext!!, 2)
-        binding.RV.adapter = adapter
-
-        //myDbManager.openDb()
-        //myDbManager.insertToDb(id, price.toString(),title)
-
-        val card = bank_cards("","","")
-        adapter.addCard(card)
-
-    }
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == imageReguestCode) {
-            if (resultCode == AppCompatActivity.RESULT_OK) {
-                if (data != null) {
-                    try {
-                        addingAds(data.data.toString())
-                        image = data.data.toString()
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                }
-            }
+            rvP(i)
+            i--
         }
     }
 
+    fun rvP(i:Int){
+        val adapter = adapter_cards(thiscontext!!)
+        binding.RVHOME.layoutManager = GridLayoutManager(thiscontext!!, 2)
+        binding.RVHOME.adapter = adapter
 
-    companion object{
-        fun newInstance() = Posts_frag.newInstance()
+        val card = bank_cards(PriceADS[i],"content://com.android.providers.media.documents/document/image%3A25",COLUMN_titleADS[i])
+        adapter.addCard(card)
     }
 
+
     override fun onDestroy() {
+        val myDbManager = AdsDBManager(thiscontext!!)
         super.onDestroy()
-        //val myDbManager = MuDbManager(thiscontext!!)
-        //myDbManager.closeDb()
+        myDbManager.closeDb()
     }
 }

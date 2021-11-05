@@ -1,7 +1,7 @@
 package com.example.worldskillsshop.db
 
 class ListItem {
-
+    var ID = "ID"
     var AddImage = "PhotoA"
     var AddImage_1 = "PhotoB"
     var AddImage_2 = "PhotoC"

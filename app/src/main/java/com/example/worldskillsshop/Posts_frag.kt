@@ -7,14 +7,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.worldskillbank.adapter_RV.adapter_cards
-import com.example.worldskillbank.data_history_RV.bank_cards
 import com.example.worldskillsshop.adapter_RV.adapter_message
 import com.example.worldskillsshop.data_history_RV.Message
-import com.example.worldskillsshop.databinding.FragmentHomeBinding
 import com.example.worldskillsshop.databinding.FragmentPostsFragBinding
 
 class Posts_frag : Fragment() {
@@ -42,8 +38,8 @@ class Posts_frag : Fragment() {
     fun rvFun(message:String, Nick:String,Icon_message: String){
         val adapter = adapter_message()
 
-        binding.RV.layoutManager = GridLayoutManager(this.context, 1)
-        binding.RV.adapter = adapter
+        binding.RVPOSTS.layoutManager = GridLayoutManager(this.context, 1)
+        binding.RVPOSTS.adapter = adapter
 
         val card = Message(Icon_message,Nick,message)
         adapter.addCard(card)

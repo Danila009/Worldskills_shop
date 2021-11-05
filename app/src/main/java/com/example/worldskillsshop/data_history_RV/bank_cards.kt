@@ -1,4 +1,4 @@
-package com.example.worldskillbank.data_history_RV
+package com.example.worldskillsshop.data_history_RV
 
 import java.net.URI
 

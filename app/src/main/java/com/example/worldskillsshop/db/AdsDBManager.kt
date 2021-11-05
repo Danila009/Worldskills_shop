@@ -32,8 +32,8 @@ class AdsDBManager(val context: Context) {
     }
 
     @SuppressLint("Range")
-    fun readDbDate(): ArrayList<ListItem> {
-        val dataList = ArrayList<ListItem>()
+    fun readDbDate(id:String): ArrayList<String> {
+        val dataList = ArrayList<String>()
 
         val cursor = db?.query(
             AdsDBNameClass.TABLE_NAME, null,null, null,
@@ -49,8 +49,10 @@ class AdsDBManager(val context: Context) {
             val PriceADS = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.PriceADS))
             val Description = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.Description))
             val Phone = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.Phone))
+            val ID = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.ID))
 
             val item = ListItem()
+            item.ID = ID
             item.Phone = Phone
             item.AddImage = AddImage
             item.AddImage_1 = AddImage_1
@@ -60,7 +62,17 @@ class AdsDBManager(val context: Context) {
             item.Description = Description
             item.COLUMN_titleADS = COLUMN_titleADS
 
-            dataList.add(item)
+            when(id){
+                "Id" -> dataList.add(ID)
+                "Phone" -> dataList.add(Phone)
+                "PriceADS" -> dataList.add(PriceADS)
+                "Description" -> dataList.add(Description)
+                "COLUMN_titleADS" -> dataList.add(COLUMN_titleADS)
+                "AddImage" -> dataList.add(AddImage)
+                "AddImage_1" -> dataList.add(AddImage_1)
+                "AddImage_2" -> dataList.add(AddImage_2)
+                "AddImage_3" -> dataList.add(AddImage_3)
+            }
         }
         cursor.close()
         return dataList
@@ -69,5 +81,6 @@ class AdsDBManager(val context: Context) {
 
     fun closeDb(){
         AdsDBHelper.close()
+
     }
 }

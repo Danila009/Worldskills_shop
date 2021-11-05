@@ -1,4 +1,4 @@
-package com.example.worldskillbank.adapter_RV
+package com.example.worldskillsshop.adapter_RV
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,14 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.worldskillbank.data_history_RV.bank_cards
+import com.example.worldskillsshop.data_history_RV.bank_cards
 import com.example.worldskillsshop.*
 import com.example.worldskillsshop.databinding.AnnouncementRvBinding
-import com.example.worldskillsshop.ui.dashboard.DashboardFragment
-import com.example.worldskillsshop.ui.home.HomeFragment
-import com.example.worldskillsshop.ui.notifications.NotificationsFragment
 
 class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.CardHolder>() {
 
@@ -88,10 +84,11 @@ class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.Card
         return CardList.size
     }
 
-    fun addCard(card:bank_cards){
+    @SuppressLint("NotifyDataSetChanged")
+    fun addCard(card: bank_cards){
 
+        //CardList.clear()
         CardList.add(card)
         notifyDataSetChanged()
     }
-
 }

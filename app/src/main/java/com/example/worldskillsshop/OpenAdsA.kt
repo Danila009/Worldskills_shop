@@ -1,14 +1,9 @@
 package com.example.worldskillsshop
 
-import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.ActionBar
 import androidx.core.net.toUri
-import com.example.worldskillbank.adapter_RV.adapter_cards
 import com.example.worldskillsshop.databinding.ActivityOpenAdsBinding
 
 class OpenAdsA : AppCompatActivity() {

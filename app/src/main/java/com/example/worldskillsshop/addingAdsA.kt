@@ -110,47 +110,47 @@ class addingAdsA : AppCompatActivity() {
 
                 val intent = Intent(this, MainActivity::class.java)
 
-                    if (AddImageProver){
+                    if (AddImageProver&&!AddImageProver_1&&!AddImageProver_2&&!AddImageProver_3){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
                                                 "0","0","0")
-                    } else if (AddImageProver_1){
+                    } else if (AddImageProver_1&&!AddImageProver&&!AddImageProver_2&&!AddImageProver_3){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),"0",
                                                 AddImage_1,"0","0")
-                    } else if (AddImageProver_2){
+                    } else if (AddImageProver_2&&!AddImageProver&&!AddImageProver_1&&!AddImageProver_3){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),"0",
                                                 "0",AddImage_2,"0")
-                    } else if (AddImageProver_3){
+                    } else if (AddImageProver_3&&!AddImageProver&&!AddImageProver_2&&!AddImageProver_1){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),"0",
                                                 "0","0",AddImage_3)
-                    }else if (AddImageProver && AddImageProver_1){
+                    }else if (AddImageProver && AddImageProver_1&&!AddImageProver_2&&!AddImageProver_3){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
                                                 AddImage_1,"0","0")
-                    } else if (AddImageProver_2 && AddImageProver_3){
+                    } else if (AddImageProver_2 && AddImageProver_3&&!AddImageProver&&!AddImageProver_1){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),"0",
                                                 "0",AddImage_2,AddImage_3)
-                    }else if (AddImageProver && AddImageProver_2){
+                    }else if (AddImageProver && AddImageProver_2&&!AddImageProver_1&&!AddImageProver_3){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
                                                 "0",AddImage_2,"0")
-                    }else if (AddImageProver_1 && AddImageProver_3){
+                    }else if (AddImageProver_1 && AddImageProver_3&&!AddImageProver&&!AddImageProver_2){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),"0",
                                                 AddImage_1,"0",AddImage_3)
-                    }else if (AddImageProver && AddImageProver_3 ){
+                    }else if (AddImageProver && AddImageProver_3 &&!AddImageProver_1&&!AddImageProver_2){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
                                                 "0","0",AddImage_3)
-                    }else if (AddImageProver_1 && AddImageProver_2){
+                    }else if (AddImageProver_1 && AddImageProver_2&&!AddImageProver&&!AddImageProver_3){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),"0",
                                                 AddImage_1,AddImage_2,"0")
-                    }else{
+                    }else if (AddImageProver&&AddImageProver_2&&AddImageProver_1&&AddImageProver_3){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
                                                 AddImage_1,AddImage_2,AddImage_3)

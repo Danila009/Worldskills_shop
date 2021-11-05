@@ -3,8 +3,11 @@ package com.example.worldskillsshop
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.worldskillsshop.adapter_RV.adapter_coupon
 import com.example.worldskillsshop.adapter_RV.adapter_message
@@ -26,6 +29,10 @@ class Coupons_frag : Fragment() {
         _binding = FragmentCouponsFragBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar!!.title = "Купоны"
+        setHasOptionsMenu(true)
+
         rvFun("500 руб.","2000 руб.","12.11.2021 12:00:00","Первая покупка")
 
         return root
@@ -34,11 +41,21 @@ class Coupons_frag : Fragment() {
     fun rvFun(DiscountAmount:String,From:String,remainder:String,nameCoupon:String){
         val adapter = adapter_coupon()
 
-        binding.RV.layoutManager = GridLayoutManager(this.context, 1)
-        binding.RV.adapter = adapter
+        binding.RVCOUPONS.layoutManager = GridLayoutManager(this.context, 1)
+        binding.RVCOUPONS.adapter = adapter
 
         val card = сoupon(DiscountAmount,From,remainder,nameCoupon)
         adapter.addCard(card)
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean
+    {
+        val id = item.itemId
+        when (id)
+        {
+            android.R.id.home -> view?.findNavController()?.navigate(R.id.navigation_notifications)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
