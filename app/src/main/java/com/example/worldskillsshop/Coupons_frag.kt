@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.worldskillsshop.adapter_RV.adapter_coupon
 import com.example.worldskillsshop.adapter_RV.adapter_message
 import com.example.worldskillsshop.data_history_RV.Message
@@ -20,6 +21,8 @@ class Coupons_frag : Fragment() {
 
     private var _binding: FragmentCouponsFragBinding? = null
     private val binding get() = _binding!!
+
+    private val adapter = adapter_coupon()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,9 +42,8 @@ class Coupons_frag : Fragment() {
     }
 
     fun rvFun(DiscountAmount:String,From:String,remainder:String,nameCoupon:String){
-        val adapter = adapter_coupon()
 
-        binding.RVCOUPONS.layoutManager = GridLayoutManager(this.context, 1)
+        binding.RVCOUPONS.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         binding.RVCOUPONS.adapter = adapter
 
         val card = сoupon(DiscountAmount,From,remainder,nameCoupon)

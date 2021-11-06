@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.worldskillsshop.adapter_RV.adapter_cards
 import com.example.worldskillsshop.data_history_RV.bank_cards
 import com.example.worldskillsshop.*
@@ -47,6 +48,9 @@ class HomeFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+    var adapter:adapter_cards? = null
+    var myDbManager:AdsDBManager? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,8 +68,8 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
         thiscontext = container?.context
-
-        DB()
+        adapter = adapter_cards(thiscontext!!)
+        myDbManager = AdsDBManager(thiscontext!!)
 
         binding.floatingActionButton.setOnClickListener {
             com.example.worldskillsshop.Intent().open(thiscontext!!)
@@ -73,36 +77,74 @@ class HomeFragment : Fragment() {
         return (root)
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        DB()
+    }
+
     fun DB(){
-        val myDbManager = AdsDBManager(thiscontext!!)
-        myDbManager.openDb()
-        Id = myDbManager.readDbDate("Id")
-        Phone = myDbManager.readDbDate("Phone")
-        PriceADS = myDbManager.readDbDate("PriceADS")
-        Description = myDbManager.readDbDate("Description")
-        COLUMN_titleADS = myDbManager.readDbDate("COLUMN_titleADS")
-        AddImage = myDbManager.readDbDate("AddImage")
-        AddImage_1 = myDbManager.readDbDate("AddImage_1")
-        AddImage_2 = myDbManager.readDbDate("AddImage_2")
-        AddImage_3 = myDbManager.readDbDate("AddImage_3")
-        var i = Id.size
 
-        while (i > 0){
+        myDbManager?.openDb()
+        Id = myDbManager!!.readDbDate("Id")
+        Phone = myDbManager!!.readDbDate("Phone")
+        PriceADS = myDbManager!!.readDbDate("PriceADS")
+        Description = myDbManager!!.readDbDate("Description")
+        COLUMN_titleADS = myDbManager!!.readDbDate("COLUMN_titleADS")
+        AddImage = myDbManager!!.readDbDate("AddImage")
+        AddImage_1 = myDbManager!!.readDbDate("AddImage_1")
+        AddImage_2 = myDbManager!!.readDbDate("AddImage_2")
+        AddImage_3 = myDbManager!!.readDbDate("AddImage_3")
 
-            rvP(i)
+        myDbManager?.insertToDb("0","0","0","0","0","0","0","0")
+
+
+        var i = 1000
+        val ran = Id.size
+
+        while (i != 0){
+
+            val ranD = (0..ran-1).random()
             i--
+
+            binding.RVHOME.layoutManager = GridLayoutManager(thiscontext, 2)
+            binding.RVHOME.adapter = adapter
+
+            if(AddImage[ranD] != "0"&& AddImage_1[ranD] == "0"&& AddImage_2[ranD] == "0"&&AddImage_3[ranD] =="0"){
+                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD])
+                adapter?.addCard(card)
+            }else if (AddImage_1[ranD] != "0"&&AddImage[ranD] =="0"&&AddImage_2[ranD]=="0"&&AddImage_3[ranD]=="0"){
+                val card = bank_cards(PriceADS[ranD],AddImage_1[ranD],COLUMN_titleADS[ranD], Description[ranD])
+                adapter?.addCard(card)
+            } else if (AddImage_2[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]=="0"&&AddImage_3[ranD]=="0"){
+                val card = bank_cards(PriceADS[ranD],AddImage_2[ranD],COLUMN_titleADS[ranD], Description[ranD])
+                adapter?.addCard(card)
+            } else if (AddImage_3[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]=="0"){
+                val card = bank_cards(PriceADS[ranD],AddImage_3[ranD],COLUMN_titleADS[ranD], Description[ranD])
+                adapter?.addCard(card)
+            }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]=="0"){
+                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD])
+                adapter?.addCard(card)
+            }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]=="0"){
+                val card = bank_cards(PriceADS[ranD],AddImage_1[ranD],COLUMN_titleADS[ranD], Description[ranD])
+                adapter?.addCard(card)
+            }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]!="0"){
+                val card = bank_cards(PriceADS[ranD],AddImage_2[ranD],COLUMN_titleADS[ranD], Description[ranD])
+                adapter?.addCard(card)
+            }else if (AddImage_3[ranD] == "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]=="0"){
+                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD])
+                adapter?.addCard(card)
+            }else if (AddImage_3[ranD] == "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]!="0"){
+                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD])
+                adapter?.addCard(card)
+            }else if (AddImage_3[ranD] == "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]!="0"){
+                val card = bank_cards(PriceADS[ranD],AddImage_1[ranD],COLUMN_titleADS[ranD], Description[ranD])
+                adapter?.addCard(card)
+            }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]!="0"){
+                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD])
+                adapter?.addCard(card)
+            }
         }
     }
-
-    fun rvP(i:Int){
-        val adapter = adapter_cards(thiscontext!!)
-        binding.RVHOME.layoutManager = GridLayoutManager(thiscontext!!, 2)
-        binding.RVHOME.adapter = adapter
-
-        val card = bank_cards(PriceADS[i],"content://com.android.providers.media.documents/document/image%3A25",COLUMN_titleADS[i])
-        adapter.addCard(card)
-    }
-
 
     override fun onDestroy() {
         val myDbManager = AdsDBManager(thiscontext!!)

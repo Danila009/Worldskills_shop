@@ -31,7 +31,7 @@ class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.Card
             productPhoto.setImageURI(card.productPhoto.toUri())
             titleAnnouncement.text = card.titleAnnouncement
 
-            basketBut.setOnClickListener {
+            productPhoto.setOnClickListener {
                 Log.d("sfsDSASDVd","ajdabhvapdvuhibpshviYAFDPBI")
 
 
@@ -40,6 +40,7 @@ class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.Card
                     putExtra(MyIntent.I_price, card.price)
                     putExtra(MyIntent.I_productPhoto, card.productPhoto)
                     putExtra(MyIntent.I_titleAnnouncement, card.titleAnnouncement)
+                    putExtra(MyIntent.I_Description, card.description)
                 }
                 context.startActivity(Intent)
             }

@@ -13,5 +13,4 @@ class AdsDBHelper(context: Context): SQLiteOpenHelper(context, AdsDBNameClass.DA
         db?.execSQL(AdsDBNameClass.SQL_DELETE_TABLE)
         onCreate(db)
     }
-
 }

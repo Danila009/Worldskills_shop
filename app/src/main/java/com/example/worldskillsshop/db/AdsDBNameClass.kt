@@ -17,7 +17,7 @@ object AdsDBNameClass {
     const val ID = BaseColumns._ID
 
 
-    const val DATABASE_VERSION = 120  //версия
+    const val DATABASE_VERSION = 170  //версия
     const val DATABASE_NAME = "MyDb.db"  //Название
 
     const val CREAT_TABLE = "CREATE TABLE IF NOT EXISTS $TABLE_NAME ("+
