@@ -10,4 +10,5 @@ class ListItem {
     var COLUMN_titleADS = "title"
     var Phone = "Phone"
     var Description = "Description"
+    var Time = "time"
 }

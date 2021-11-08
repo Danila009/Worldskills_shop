@@ -3,7 +3,6 @@ package com.example.worldskillsshop.adapter_RV
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.worldskillsshop.data_history_RV.bank_cards
 import com.example.worldskillsshop.*
 import com.example.worldskillsshop.databinding.AnnouncementRvBinding
+import com.example.worldskillsshop.db.ListItem
 
 class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.CardHolder>() {
 
@@ -32,7 +32,6 @@ class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.Card
             titleAnnouncement.text = card.titleAnnouncement
 
             productPhoto.setOnClickListener {
-                Log.d("sfsDSASDVd","ajdabhvapdvuhibpshviYAFDPBI")
 
 
                 val Intent = Intent(context, OpenAdsA::class.java).apply {
@@ -41,6 +40,7 @@ class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.Card
                     putExtra(MyIntent.I_productPhoto, card.productPhoto)
                     putExtra(MyIntent.I_titleAnnouncement, card.titleAnnouncement)
                     putExtra(MyIntent.I_Description, card.description)
+                    putExtra(MyIntent.I_Time, card.time)
                 }
                 context.startActivity(Intent)
             }
@@ -86,9 +86,22 @@ class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.Card
     }
 
     @SuppressLint("NotifyDataSetChanged")
+    fun updateAdapter(listItems: List<bank_cards>){
+        CardList.clear()
+        CardList.addAll(listItems)
+        notifyDataSetChanged()
+    }
+
+    fun removaItem(pos:Int){
+        CardList.removeAt(pos)
+        notifyItemRangeChanged(0,CardList.size)
+        notifyItemRemoved(pos)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
     fun addCard(card: bank_cards){
 
-        //CardList.clear()
+        CardList.clear()
         CardList.add(card)
         notifyDataSetChanged()
     }

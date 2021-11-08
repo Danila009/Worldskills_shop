@@ -13,6 +13,8 @@ import com.example.worldskillsshop.databinding.ActivityAddingAdsBinding
 import com.example.worldskillsshop.db.AdsDBManager
 import com.example.worldskillsshop.ui.home.HomeFragment
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class addingAdsA : AppCompatActivity() {
 
@@ -49,6 +51,7 @@ class addingAdsA : AppCompatActivity() {
         bar?.setDisplayHomeAsUpEnabled(true)
         bar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#141414")))
         bar?.title = "Добавить объявление"
+
 
         myDbManager.openDb()
 
@@ -113,47 +116,47 @@ class addingAdsA : AppCompatActivity() {
                     if (AddImageProver&&!AddImageProver_1&&!AddImageProver_2&&!AddImageProver_3){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
-                                                "0","0","0")
+                                                "0","0","0", getCurrentTime())
                     } else if (AddImageProver_1&&!AddImageProver&&!AddImageProver_2&&!AddImageProver_3){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),"0",
-                                                AddImage_1,"0","0")
+                                                AddImage_1,"0","0", getCurrentTime())
                     } else if (AddImageProver_2&&!AddImageProver&&!AddImageProver_1&&!AddImageProver_3){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),"0",
-                                                "0",AddImage_2,"0")
+                                                "0",AddImage_2,"0", getCurrentTime())
                     } else if (AddImageProver_3&&!AddImageProver&&!AddImageProver_2&&!AddImageProver_1){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),"0",
-                                                "0","0",AddImage_3)
+                                                "0","0",AddImage_3, getCurrentTime())
                     }else if (AddImageProver && AddImageProver_1&&!AddImageProver_2&&!AddImageProver_3){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
-                                                AddImage_1,"0","0")
+                                                AddImage_1,"0","0", getCurrentTime())
                     } else if (AddImageProver_2 && AddImageProver_3&&!AddImageProver&&!AddImageProver_1){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),"0",
-                                                "0",AddImage_2,AddImage_3)
+                                                "0",AddImage_2,AddImage_3, getCurrentTime())
                     }else if (AddImageProver && AddImageProver_2&&!AddImageProver_1&&!AddImageProver_3){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
-                                                "0",AddImage_2,"0")
+                                                "0",AddImage_2,"0", getCurrentTime())
                     }else if (AddImageProver_1 && AddImageProver_3&&!AddImageProver&&!AddImageProver_2){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),"0",
-                                                AddImage_1,"0",AddImage_3)
+                                                AddImage_1,"0",AddImage_3, getCurrentTime())
                     }else if (AddImageProver && AddImageProver_3 &&!AddImageProver_1&&!AddImageProver_2){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
-                                                "0","0",AddImage_3)
+                                                "0","0",AddImage_3, getCurrentTime())
                     }else if (AddImageProver_1 && AddImageProver_2&&!AddImageProver&&!AddImageProver_3){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),"0",
-                                                AddImage_1,AddImage_2,"0")
+                                                AddImage_1,AddImage_2,"0", getCurrentTime())
                     }else if (AddImageProver&&AddImageProver_2&&AddImageProver_1&&AddImageProver_3){
                         myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
                                                 binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
-                                                AddImage_1,AddImage_2,AddImage_3)
+                                                AddImage_1,AddImage_2,AddImage_3, getCurrentTime())
                     }
                 startActivity(intent)
             }
@@ -184,15 +187,22 @@ class addingAdsA : AppCompatActivity() {
         return true
     }
 
+    private fun getCurrentTime():String{
+        val time = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("dd-MM-yy hh:mm:ss", Locale.getDefault())
+        val fTime = formatter.format(time)
+        return fTime
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == imageReguestCode) {
             if (resultCode == AppCompatActivity.RESULT_OK) {
                 if (data != null) {
                     try {
+                        //contentResolver.takePersistableUriPermission(data.data!!, Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
                         addingAds(data.data.toString())
                         id = data.data.toString()
-
                         when(int_image){
                             1 -> AddImage = data.data.toString()
                             2 -> AddImage_1 = data.data.toString()

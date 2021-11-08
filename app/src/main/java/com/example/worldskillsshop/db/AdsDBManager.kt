@@ -3,6 +3,7 @@ package com.example.worldskillsshop.db
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import java.util.ArrayList
 
@@ -15,13 +16,14 @@ class AdsDBManager(val context: Context) {
         db = AdsDBHelper.writableDatabase
     }
 
-    fun insertToDb(COLUMN_titleADS:String, PriceADS:String, Description:String, Phone: String, AddImage:String, AddImage_1:String,AddImage_2:String,AddImage_3:String){
+    fun insertToDb(COLUMN_titleADS:String, PriceADS:String, Description:String, Phone: String, AddImage:String, AddImage_1:String,AddImage_2:String,AddImage_3:String, Time:String){
         val values = ContentValues().apply {
 
             put(AdsDBNameClass.COLUMN_titleADS, COLUMN_titleADS)
             put(AdsDBNameClass.PriceADS, PriceADS)
             put(AdsDBNameClass.Description, Description)
             put(AdsDBNameClass.Phone, Phone)
+            put(AdsDBNameClass.Time, Time)
             put(AdsDBNameClass.AddImageA, AddImage)
             put(AdsDBNameClass.AddImageB, AddImage_1)
             put(AdsDBNameClass.AddImageC, AddImage_2)
@@ -32,12 +34,20 @@ class AdsDBManager(val context: Context) {
     }
 
     @SuppressLint("Range")
-    fun readDbDate(id:String): ArrayList<String> {
+    fun readDbDate(id:String, SearchText:String): ArrayList<String> {
         val dataList = ArrayList<String>()
+        val selector = "${AdsDBNameClass.COLUMN_titleADS} like ?"
+        var cursor:Cursor? =null
 
-        val cursor = db?.query(
-            AdsDBNameClass.TABLE_NAME, null,null, null,
-            null,null, null)
+        if (SearchText != "0"){
+             cursor = db?.query(
+                AdsDBNameClass.TABLE_NAME, null,selector, arrayOf(SearchText),
+                null,null, null)
+        }else if (SearchText =="0"){
+             cursor = db?.query(
+                AdsDBNameClass.TABLE_NAME, null,null, null,
+                null,null, null)
+        }
 
 
         while (cursor?.moveToNext()!!){
@@ -50,6 +60,7 @@ class AdsDBManager(val context: Context) {
             val Description = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.Description))
             val Phone = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.Phone))
             val ID = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.ID))
+            val Time = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.Time))
 
             val item = ListItem()
             item.ID = ID
@@ -61,6 +72,7 @@ class AdsDBManager(val context: Context) {
             item.PriceADS = PriceADS
             item.Description = Description
             item.COLUMN_titleADS = COLUMN_titleADS
+            item.Time = Time
 
             when(id){
                 "Id" -> dataList.add(ID)
@@ -72,6 +84,7 @@ class AdsDBManager(val context: Context) {
                 "AddImage_1" -> dataList.add(AddImage_1)
                 "AddImage_2" -> dataList.add(AddImage_2)
                 "AddImage_3" -> dataList.add(AddImage_3)
+                "Time" -> dataList.add(Time)
             }
         }
         cursor.close()

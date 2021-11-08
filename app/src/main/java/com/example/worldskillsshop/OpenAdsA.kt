@@ -37,6 +37,7 @@ class OpenAdsA : AppCompatActivity() {
         binding.titleAnnouncementOpen.text = intent.getStringExtra(MyIntent.I_titleAnnouncement)
         binding.productPhotoOpen.setImageURI(intent.getStringExtra(MyIntent.I_productPhoto)?.toUri())
         binding.descriptionOpen.text = intent.getStringExtra(MyIntent.I_Description)
+        binding.Time.text = intent.getStringExtra(MyIntent.I_Time)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

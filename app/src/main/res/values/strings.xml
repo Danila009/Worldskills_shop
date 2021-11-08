@@ -12,4 +12,24 @@
     <string name="Notifications">Уведомления</string>
     <string name="Delete_history">Delete_history</string>
     <string name="Change_user">Сменить пользователя</string>
+
+    <string-array name="category">
+        <item>Категория</item>
+        <item>Транспорт</item>
+        <item>Недвижимость</item>
+        <item>Работа</item>
+        <item>Услуги</item>
+        <item>Личные вещи</item>
+        <item>Для дома и дачи</item>
+        <item>Электроника</item>
+        <item>Хобби и отдых</item>
+        <item>Животные</item>
+        <item>Готовый бизнес и оборудование</item>
+    </string-array>
+
+    <string-array name="Sellers">
+        <item>Частный</item>
+        <item>Компания</item>
+    </string-array>
 </resources>
+

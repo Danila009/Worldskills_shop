@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.service.controls.Control
 import android.util.Log
+import android.widget.SearchView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -23,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     var navView:BottomNavigationView? = null
-
 
 
         override fun onCreate(savedInstanceState: Bundle?) {

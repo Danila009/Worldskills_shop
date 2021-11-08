@@ -8,18 +8,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
+import com.example.worldskillsshop.databinding.FragmentHomeBinding
+import com.example.worldskillsshop.databinding.FragmentOrdersFragBinding
 
 class Orders_frag : Fragment() {
+
+    private var _binding: FragmentOrdersFragBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar!!.title = "Заказы"
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_orders_frag, container, false)
+
+        _binding = FragmentOrdersFragBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        Glide
+            .with(this)
+            .load("https://im0-tub-ru.yandex.net/i?id=a931db9b0a2d0c38cf1caae42432e4c2-l&n=13")
+            .into(binding.imageView3)
+
+        return root
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean
     {

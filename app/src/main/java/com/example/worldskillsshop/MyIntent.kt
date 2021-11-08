@@ -14,4 +14,5 @@ object MyIntent {
     const val AddImage_2 = "AddImage_2"
     const val AddImage_3 = "AddImage_3"
     const val AddImage_4 = "AddImage_4"
+    const val I_Time = "Time"
 }
