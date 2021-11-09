@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.core.net.toUri
 import com.example.worldskillsshop.databinding.ActivityAddingAdsBinding
@@ -109,56 +110,183 @@ class addingAdsA : AppCompatActivity() {
                 && binding.PriceADS.text.isNotEmpty()
                 && binding.Phone.text.isNotEmpty()
                 && binding.Description.text.isNotEmpty()
-                && int_image != 0){
+                && int_image != 0
+                && binding.Phone.text.count() == 11
+                && binding.titleADS.text.count() <= 50
+                && binding.Description.text.count() <= 300
+                &&binding.PriceADS.text.toString().toInt() >= 100
+            ) {
+                if (binding.PriceADS.text.toString().toInt() <= 100000000){
+                    val intent = Intent(this, MainActivity::class.java)
 
-                val intent = Intent(this, MainActivity::class.java)
-
-                    if (AddImageProver&&!AddImageProver_1&&!AddImageProver_2&&!AddImageProver_3){
-                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
-                                                binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
-                                                "0","0","0", getCurrentTime())
-                    } else if (AddImageProver_1&&!AddImageProver&&!AddImageProver_2&&!AddImageProver_3){
-                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
-                                                binding.Description.text.toString(),binding.Phone.text.toString(),"0",
-                                                AddImage_1,"0","0", getCurrentTime())
-                    } else if (AddImageProver_2&&!AddImageProver&&!AddImageProver_1&&!AddImageProver_3){
-                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
-                                                binding.Description.text.toString(),binding.Phone.text.toString(),"0",
-                                                "0",AddImage_2,"0", getCurrentTime())
-                    } else if (AddImageProver_3&&!AddImageProver&&!AddImageProver_2&&!AddImageProver_1){
-                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
-                                                binding.Description.text.toString(),binding.Phone.text.toString(),"0",
-                                                "0","0",AddImage_3, getCurrentTime())
-                    }else if (AddImageProver && AddImageProver_1&&!AddImageProver_2&&!AddImageProver_3){
-                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
-                                                binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
-                                                AddImage_1,"0","0", getCurrentTime())
-                    } else if (AddImageProver_2 && AddImageProver_3&&!AddImageProver&&!AddImageProver_1){
-                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
-                                                binding.Description.text.toString(),binding.Phone.text.toString(),"0",
-                                                "0",AddImage_2,AddImage_3, getCurrentTime())
-                    }else if (AddImageProver && AddImageProver_2&&!AddImageProver_1&&!AddImageProver_3){
-                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
-                                                binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
-                                                "0",AddImage_2,"0", getCurrentTime())
-                    }else if (AddImageProver_1 && AddImageProver_3&&!AddImageProver&&!AddImageProver_2){
-                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
-                                                binding.Description.text.toString(),binding.Phone.text.toString(),"0",
-                                                AddImage_1,"0",AddImage_3, getCurrentTime())
-                    }else if (AddImageProver && AddImageProver_3 &&!AddImageProver_1&&!AddImageProver_2){
-                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
-                                                binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
-                                                "0","0",AddImage_3, getCurrentTime())
-                    }else if (AddImageProver_1 && AddImageProver_2&&!AddImageProver&&!AddImageProver_3){
-                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
-                                                binding.Description.text.toString(),binding.Phone.text.toString(),"0",
-                                                AddImage_1,AddImage_2,"0", getCurrentTime())
-                    }else if (AddImageProver&&AddImageProver_2&&AddImageProver_1&&AddImageProver_3){
-                        myDbManager.insertToDb(binding.titleADS.text.toString(),binding.PriceADS.text.toString(),
-                                                binding.Description.text.toString(),binding.Phone.text.toString(),AddImage,
-                                                AddImage_1,AddImage_2,AddImage_3, getCurrentTime())
+                    if (AddImageProver && !AddImageProver_1 && !AddImageProver_2 && !AddImageProver_3) {
+                        myDbManager.insertToDb(
+                            binding.titleADS.text.toString(),
+                            binding.PriceADS.text.toString(),
+                            binding.Description.text.toString(),
+                            binding.Phone.text.toString(),
+                            AddImage,
+                            "0",
+                            "0",
+                            "0",
+                            getCurrentTime(),
+                            "0")
+                    } else if (AddImageProver_1 && !AddImageProver && !AddImageProver_2 && !AddImageProver_3) {
+                        myDbManager.insertToDb(
+                            binding.titleADS.text.toString(),
+                            binding.PriceADS.text.toString(),
+                            binding.Description.text.toString(),
+                            binding.Phone.text.toString(),
+                            "0",
+                            AddImage_1,
+                            "0",
+                            "0",
+                            getCurrentTime(),
+                            "0"
+                        )
+                    } else if (AddImageProver_2 && !AddImageProver && !AddImageProver_1 && !AddImageProver_3) {
+                        myDbManager.insertToDb(
+                            binding.titleADS.text.toString(),
+                            binding.PriceADS.text.toString(),
+                            binding.Description.text.toString(),
+                            binding.Phone.text.toString(),
+                            "0",
+                            "0",
+                            AddImage_2,
+                            "0",
+                            getCurrentTime(),
+                            "0"
+                        )
+                    } else if (AddImageProver_3 && !AddImageProver && !AddImageProver_2 && !AddImageProver_1) {
+                        myDbManager.insertToDb(
+                            binding.titleADS.text.toString(),
+                            binding.PriceADS.text.toString(),
+                            binding.Description.text.toString(),
+                            binding.Phone.text.toString(),
+                            "0",
+                            "0",
+                            "0",
+                            AddImage_3,
+                            getCurrentTime(),
+                            "0"
+                        )
+                    } else if (AddImageProver && AddImageProver_1 && !AddImageProver_2 && !AddImageProver_3) {
+                        myDbManager.insertToDb(
+                            binding.titleADS.text.toString(),
+                            binding.PriceADS.text.toString(),
+                            binding.Description.text.toString(),
+                            binding.Phone.text.toString(),
+                            AddImage,
+                            AddImage_1,
+                            "0",
+                            "0",
+                            getCurrentTime(),
+                            "0"
+                        )
+                    } else if (AddImageProver_2 && AddImageProver_3 && !AddImageProver && !AddImageProver_1) {
+                        myDbManager.insertToDb(
+                            binding.titleADS.text.toString(), binding.PriceADS.text.toString(),
+                            binding.Description.text.toString(),
+                            binding.Phone.text.toString(),
+                            "0",
+                            "0",
+                            AddImage_2,
+                            AddImage_3,
+                            getCurrentTime(),
+                            "0"
+                        )
+                    } else if (AddImageProver && AddImageProver_2 && !AddImageProver_1 && !AddImageProver_3) {
+                        myDbManager.insertToDb(
+                            binding.titleADS.text.toString(),
+                            binding.PriceADS.text.toString(),
+                            binding.Description.text.toString(),
+                            binding.Phone.text.toString(),
+                            AddImage,
+                            "0",
+                            AddImage_2,
+                            "0",
+                            getCurrentTime(),
+                            "0"
+                        )
+                    } else if (AddImageProver_1 && AddImageProver_3 && !AddImageProver && !AddImageProver_2) {
+                        myDbManager.insertToDb(
+                            binding.titleADS.text.toString(),
+                            binding.PriceADS.text.toString(),
+                            binding.Description.text.toString(),
+                            binding.Phone.text.toString(),
+                            "0",
+                            AddImage_1,
+                            "0",
+                            AddImage_3,
+                            getCurrentTime(),
+                            "0"
+                        )
+                    } else if (AddImageProver && AddImageProver_3 && !AddImageProver_1 && !AddImageProver_2) {
+                        myDbManager.insertToDb(
+                            binding.titleADS.text.toString(),
+                            binding.PriceADS.text.toString(),
+                            binding.Description.text.toString(),
+                            binding.Phone.text.toString(),
+                            AddImage,
+                            "0",
+                            "0",
+                            AddImage_3,
+                            getCurrentTime(),
+                            "0"
+                        )
+                    } else if (AddImageProver_1 && AddImageProver_2 && !AddImageProver && !AddImageProver_3) {
+                        myDbManager.insertToDb(
+                            binding.titleADS.text.toString(),
+                            binding.PriceADS.text.toString(),
+                            binding.Description.text.toString(),
+                            binding.Phone.text.toString(),
+                            "0",
+                            AddImage_1,
+                            AddImage_2,
+                            "0",
+                            getCurrentTime(),
+                            "0"
+                        )
+                    } else if (AddImageProver && AddImageProver_2 && AddImageProver_1 && AddImageProver_3) {
+                        myDbManager.insertToDb(
+                            binding.titleADS.text.toString(),
+                            binding.PriceADS.text.toString(),
+                            binding.Description.text.toString(),
+                            binding.Phone.text.toString(),
+                            AddImage,
+                            AddImage_1,
+                            AddImage_2,
+                            AddImage_3,
+                            getCurrentTime(),
+                            "0"
+                        )
                     }
-                startActivity(intent)
+                    startActivity(intent)
+                }
+            } else if (binding.Phone.text.count() != 11 || binding.Phone.text.isEmpty()) {
+                binding.Phone.setTextColor(Color.RED)
+                bar?.title = "Номер введен некорректно"
+            } else if (binding.Description.text.count() > 300 || binding.Description.text.isEmpty()) {
+                binding.Description.setTextColor(Color.RED)
+                binding.Phone.setTextColor(Color.GREEN)
+                bar?.title = "От 1 до 300 символов в описание"
+            } else if (binding.titleADS.text.count() > 50 || binding.titleADS.text.isEmpty()) {
+                binding.Description.setTextColor(Color.GREEN)
+                binding.titleADS.setTextColor(Color.RED)
+                binding.Phone.setTextColor(Color.GREEN)
+                bar?.title = "От 1 до 50 символов в название"
+            } else if (binding.PriceADS.text.toString().toInt() > 100000000 || binding.PriceADS.text.isEmpty() || binding.PriceADS.text.count().toString().toInt() < 100) {
+                binding.PriceADS.setTextColor(Color.RED)
+                binding.Description.setTextColor(Color.GREEN)
+                binding.titleADS.setTextColor(Color.GREEN)
+                binding.Phone.setTextColor(Color.GREEN)
+                bar?.title = "От 100 до 100000000 руб."
+            } else if (int_image == 0) {
+                binding.PriceADS.setTextColor(Color.GREEN)
+                binding.Description.setTextColor(Color.GREEN)
+                binding.titleADS.setTextColor(Color.GREEN)
+                binding.Phone.setTextColor(Color.GREEN)
+                bar?.title = "Загрузите фото"
             }
         }
     }
@@ -189,7 +317,7 @@ class addingAdsA : AppCompatActivity() {
 
     private fun getCurrentTime():String{
         val time = Calendar.getInstance().time
-        val formatter = SimpleDateFormat("dd-MM-yy hh:mm:ss", Locale.getDefault())
+        val formatter = SimpleDateFormat("dd-MM-yy hh:mm", Locale.getDefault())
         val fTime = formatter.format(time)
         return fTime
     }

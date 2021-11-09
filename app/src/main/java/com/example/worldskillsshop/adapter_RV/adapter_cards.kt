@@ -41,6 +41,9 @@ class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.Card
                     putExtra(MyIntent.I_titleAnnouncement, card.titleAnnouncement)
                     putExtra(MyIntent.I_Description, card.description)
                     putExtra(MyIntent.I_Time, card.time)
+                    putExtra(MyIntent.I_Phone, card.phone)
+                    putExtra(MyIntent.I_Id, card.id)
+                    putExtra(MyIntent.I_Viewing, card.Viewing)
                 }
                 context.startActivity(Intent)
             }
@@ -85,13 +88,6 @@ class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.Card
         return CardList.size
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateAdapter(listItems: List<bank_cards>){
-        CardList.clear()
-        CardList.addAll(listItems)
-        notifyDataSetChanged()
-    }
-
     fun removaItem(pos:Int){
         CardList.removeAt(pos)
         notifyItemRangeChanged(0,CardList.size)
@@ -101,7 +97,6 @@ class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.Card
     @SuppressLint("NotifyDataSetChanged")
     fun addCard(card: bank_cards){
 
-        CardList.clear()
         CardList.add(card)
         notifyDataSetChanged()
     }

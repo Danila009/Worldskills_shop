@@ -11,4 +11,5 @@ class ListItem {
     var Phone = "Phone"
     var Description = "Description"
     var Time = "time"
+    var Viewing = "Viewing"
 }

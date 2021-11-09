@@ -3,6 +3,7 @@ package com.example.worldskillsshop
 import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.service.controls.Control
 import android.util.Log
@@ -34,7 +35,6 @@ class MainActivity : AppCompatActivity() {
 
         navView =  binding.navView
 
-
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
             navView!!.setupWithNavController(navController)
     }
+
 }
 
 

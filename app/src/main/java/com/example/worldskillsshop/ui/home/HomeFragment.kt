@@ -1,9 +1,12 @@
 package com.example.worldskillsshop.ui.home
 
+import android.annotation.SuppressLint
+import android.content.ClipData
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +18,6 @@ import com.example.worldskillsshop.adapter_RV.adapter_cards
 import com.example.worldskillsshop.data_history_RV.bank_cards
 import com.example.worldskillsshop.databinding.FragmentHomeBinding
 import com.example.worldskillsshop.db.AdsDBManager
-import kotlin.collections.ArrayList
 
 
 class HomeFragment : Fragment() {
@@ -35,6 +37,7 @@ class HomeFragment : Fragment() {
     var rv = 0
     var image = ""
 
+    var search:MenuItem? = null
 
     var Id = ArrayList<String>()
     var Phone = ArrayList<String>()
@@ -46,6 +49,7 @@ class HomeFragment : Fragment() {
     var AddImage_2 = ArrayList<String>()
     var AddImage_3 = ArrayList<String>()
     var Time = ArrayList<String>()
+    var Viewing = ArrayList<String>()
 
     private val binding get() = _binding!!
 
@@ -100,52 +104,56 @@ class HomeFragment : Fragment() {
         AddImage_2 = myDbManager!!.readDbDate("AddImage_2","0")
         AddImage_3 = myDbManager!!.readDbDate("AddImage_3","0")
         Time = myDbManager!!.readDbDate("Time","0")
+        Viewing = myDbManager!!.readDbDate("Viewing","0")
 
-        myDbManager?.insertToDb("0","0","0","0","0","0","0","0", "0")
+        when(Id.size){
+            0 ->myDbManager?.insertToDb("0","0","0","0","0","0","0","0", "0",
+                "0")
+        }
 
-        binding.RVHOME.layoutManager = GridLayoutManager(thiscontext, 2)
-        binding.RVHOME.adapter = adapter
-
-        var i = 50
+        var i = 200
         val ran = Id.size-1
 
         while (i != 0){
+
+            binding.RVHOME.layoutManager = GridLayoutManager(thiscontext, 2)
+            binding.RVHOME.adapter = adapter
 
             val ranD = (0..ran).random()
             i--
 
             if(AddImage[ranD] != "0"&& AddImage_1[ranD] == "0"&& AddImage_2[ranD] == "0"&&AddImage_3[ranD] =="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD])
+                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD])
                 adapter?.addCard(card)
             }else if (AddImage_1[ranD] != "0"&&AddImage[ranD] =="0"&&AddImage_2[ranD]=="0"&&AddImage_3[ranD]=="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage_1[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD])
+                val card = bank_cards(PriceADS[ranD],AddImage_1[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD])
                 adapter?.addCard(card)
             } else if (AddImage_2[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]=="0"&&AddImage_3[ranD]=="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage_2[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD])
+                val card = bank_cards(PriceADS[ranD],AddImage_2[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD])
                 adapter?.addCard(card)
             } else if (AddImage_3[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]=="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage_3[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD])
+                val card = bank_cards(PriceADS[ranD],AddImage_3[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD])
                 adapter?.addCard(card)
             }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]=="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD])
+                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD])
                 adapter?.addCard(card)
             }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]=="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage_1[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD])
+                val card = bank_cards(PriceADS[ranD],AddImage_1[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD])
                 adapter?.addCard(card)
             }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]!="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage_2[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD])
+                val card = bank_cards(PriceADS[ranD],AddImage_2[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD])
                 adapter?.addCard(card)
             }else if (AddImage_3[ranD] == "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]=="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD])
+                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD])
                 adapter?.addCard(card)
             }else if (AddImage_3[ranD] == "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]!="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD])
+                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD])
                 adapter?.addCard(card)
             }else if (AddImage_3[ranD] == "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]!="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage_1[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD])
+                val card = bank_cards(PriceADS[ranD],AddImage_1[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD])
                 adapter?.addCard(card)
             }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]!="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD])
+                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD])
                 adapter?.addCard(card)
             }
         }
@@ -159,7 +167,6 @@ class HomeFragment : Fragment() {
 
     fun search(){
 
-
         binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return true
@@ -167,11 +174,19 @@ class HomeFragment : Fragment() {
             override fun onQueryTextChange(p0: String?): Boolean {
 
                 val list = myDbManager?.readDbDate("", p0.toString())
-                adapter?.updateAdapter(list)
+                Log.d("sadasdadsada",p0.toString())
+                //adapter?.updateAdapter(list)
                 return true
             }
         })
 
+    }
+
+    @SuppressLint("ResourceType")
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        search = menu.findItem(R.id.app_bar_search)
+        search
+        super.onPrepareOptionsMenu(menu)
     }
 
     override fun onDestroy() {

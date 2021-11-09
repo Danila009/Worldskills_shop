@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.provider.BaseColumns
 import java.util.ArrayList
 
 class AdsDBManager(val context: Context) {
@@ -16,7 +17,7 @@ class AdsDBManager(val context: Context) {
         db = AdsDBHelper.writableDatabase
     }
 
-    fun insertToDb(COLUMN_titleADS:String, PriceADS:String, Description:String, Phone: String, AddImage:String, AddImage_1:String,AddImage_2:String,AddImage_3:String, Time:String){
+    fun insertToDb(COLUMN_titleADS:String, PriceADS:String, Description:String, Phone: String, AddImage:String, AddImage_1:String,AddImage_2:String,AddImage_3:String, Time:String, Viewing:String){
         val values = ContentValues().apply {
 
             put(AdsDBNameClass.COLUMN_titleADS, COLUMN_titleADS)
@@ -28,6 +29,7 @@ class AdsDBManager(val context: Context) {
             put(AdsDBNameClass.AddImageB, AddImage_1)
             put(AdsDBNameClass.AddImageC, AddImage_2)
             put(AdsDBNameClass.AddImageD, AddImage_3)
+            put(AdsDBNameClass.Viewing, Viewing)
         }
 
         db?.insert(AdsDBNameClass.TABLE_NAME, null, values)
@@ -61,6 +63,7 @@ class AdsDBManager(val context: Context) {
             val Phone = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.Phone))
             val ID = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.ID))
             val Time = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.Time))
+            val Viewing = cursor.getString(cursor.getColumnIndex(AdsDBNameClass.Viewing))
 
             val item = ListItem()
             item.ID = ID
@@ -73,6 +76,7 @@ class AdsDBManager(val context: Context) {
             item.Description = Description
             item.COLUMN_titleADS = COLUMN_titleADS
             item.Time = Time
+            item.Viewing = Viewing
 
             when(id){
                 "Id" -> dataList.add(ID)
@@ -85,11 +89,31 @@ class AdsDBManager(val context: Context) {
                 "AddImage_2" -> dataList.add(AddImage_2)
                 "AddImage_3" -> dataList.add(AddImage_3)
                 "Time" -> dataList.add(Time)
+                "Viewing" -> dataList.add(Viewing)
             }
         }
         cursor.close()
         return dataList
 
+    }
+
+    fun updateItem(COLUMN_titleADS:String, PriceADS:String, Description:String, Phone: String, AddImage:String, AddImage_1:String,AddImage_2:String,AddImage_3:String, Time:String, Id:Int, Viewing:String){
+        val selection = BaseColumns._ID + "=$Id"
+        val values = ContentValues().apply {
+
+            put(AdsDBNameClass.COLUMN_titleADS, COLUMN_titleADS)
+            put(AdsDBNameClass.PriceADS, PriceADS)
+            put(AdsDBNameClass.Description, Description)
+            put(AdsDBNameClass.Phone, Phone)
+            put(AdsDBNameClass.Time, Time)
+            put(AdsDBNameClass.AddImageA, AddImage)
+            put(AdsDBNameClass.AddImageB, AddImage_1)
+            put(AdsDBNameClass.AddImageC, AddImage_2)
+            put(AdsDBNameClass.AddImageD, AddImage_3)
+            put(AdsDBNameClass.Viewing, Viewing)
+        }
+
+        db?.update(AdsDBNameClass.TABLE_NAME,values, selection,null)
     }
 
     fun closeDb(){

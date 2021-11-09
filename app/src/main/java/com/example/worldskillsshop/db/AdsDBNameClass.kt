@@ -15,14 +15,15 @@ object AdsDBNameClass {
     const val Phone = "Phone"
     const val Description = "Description"
     const val Time = "time"
+    const val Viewing = "viewing"
     const val ID = BaseColumns._ID
 
 
-    const val DATABASE_VERSION = 222  //версия
+    const val DATABASE_VERSION = 356      //версия
     const val DATABASE_NAME = "MyDb.db"  //Название
 
     const val CREAT_TABLE = "CREATE TABLE IF NOT EXISTS $TABLE_NAME ("+
-            "${BaseColumns._ID} INTEGER PRIMARY KEY,$PriceADS TEXT,$Description TEXT,$Phone TEXT,$COLUMN_titleADS TEXT,$AddImageA TEXT,$AddImageB TEXT,$AddImageC TEXT, $AddImageD TEXT, $Time TEXT)"
+            "${BaseColumns._ID} INTEGER PRIMARY KEY,$PriceADS TEXT,$Description TEXT,$Phone TEXT,$COLUMN_titleADS TEXT,$AddImageA TEXT,$AddImageB TEXT,$AddImageC TEXT, $AddImageD TEXT, $Time TEXT, $Viewing TEXT)"
 
     const val SQL_DELETE_TABLE = "DROP TABLE IF EXISTS $TABLE_NAME"
 }
