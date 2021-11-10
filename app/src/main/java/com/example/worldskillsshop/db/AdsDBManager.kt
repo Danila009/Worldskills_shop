@@ -118,6 +118,5 @@ class AdsDBManager(val context: Context) {
 
     fun closeDb(){
         AdsDBHelper.close()
-
     }
 }

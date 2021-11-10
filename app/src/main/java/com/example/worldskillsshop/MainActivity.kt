@@ -3,6 +3,7 @@ package com.example.worldskillsshop
 import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.service.controls.Control
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     var navView:BottomNavigationView? = null
+    var prefs: SharedPreferences? = null
 
 
         override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +36,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         navView =  binding.navView
+
+            prefs = getSharedPreferences("Table",Context.MODE_PRIVATE)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
@@ -45,6 +49,12 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
             navView!!.setupWithNavController(navController)
+    }
+
+    fun prefs_fun(res:Int){
+        val editor = prefs?.edit()
+        editor?.putInt("Table",res)
+        editor?.apply()
     }
 
 }

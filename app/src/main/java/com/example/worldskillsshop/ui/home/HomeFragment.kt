@@ -1,6 +1,7 @@
 package com.example.worldskillsshop.ui.home
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.ClipData
 import android.content.Context
 import android.graphics.Color
@@ -8,7 +9,10 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Button
+import android.widget.EditText
 import android.widget.SearchView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -16,8 +20,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.worldskillsshop.R
 import com.example.worldskillsshop.adapter_RV.adapter_cards
 import com.example.worldskillsshop.data_history_RV.bank_cards
+import com.example.worldskillsshop.databinding.EntranceDesignDialogBinding
 import com.example.worldskillsshop.databinding.FragmentHomeBinding
+import com.example.worldskillsshop.databinding.RegistrationDialogBinding
 import com.example.worldskillsshop.db.AdsDBManager
+import com.example.worldskillsshop.db.UserDBManager
+import android.content.SharedPreferences
+import com.example.worldskillsshop.MainActivity
 
 
 class HomeFragment : Fragment() {
@@ -51,10 +60,19 @@ class HomeFragment : Fragment() {
     var Time = ArrayList<String>()
     var Viewing = ArrayList<String>()
 
+    var BOL = ArrayList<String>()
+    var IdUser = ArrayList<String>()
+    var PASSWORD = ArrayList<String>()
+    var EMAIL = ArrayList<String>()
+    var NAME = ArrayList<String>()
+
     private val binding get() = _binding!!
 
     var adapter:adapter_cards? = null
+
     var myDbManager:AdsDBManager? = null
+    var DbManagerUser:UserDBManager? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,9 +94,12 @@ class HomeFragment : Fragment() {
 
         thiscontext = container?.context
         adapter = adapter_cards(thiscontext!!)
+
         myDbManager = AdsDBManager(thiscontext!!)
+        DbManagerUser = UserDBManager(thiscontext!!)
 
         search()
+
 
         binding.floatingActionButton.setOnClickListener {
             com.example.worldskillsshop.Intent().open(thiscontext!!)
@@ -86,9 +107,119 @@ class HomeFragment : Fragment() {
         return (root)
     }
 
+    @SuppressLint("ApplySharedPref", "CommitPrefEdits")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        DB()
+
+        Log.d("adada",MainActivity().prefs?.getInt("Table",0).toString())
+
+        if (MainActivity().prefs?.getInt("Table",0) == null) {
+            Log.d("adada",MainActivity().prefs?.getInt("Table",0).toString())
+            db_Entrance()
+        }else if (MainActivity().prefs?.getInt("Table",0) == 1){
+            Log.d("adada",MainActivity().prefs?.getInt("Table",0).toString())
+            DB()
+        }
+    }
+
+    fun db_Entrance(){
+        DbManagerUser?.openDb()
+        BOL = DbManagerUser!!.readDbDate("BOL")
+        IdUser = DbManagerUser!!.readDbDate("Id")
+        NAME = DbManagerUser!!.readDbDate("NAME")
+        EMAIL = DbManagerUser!!.readDbDate("EMAIL")
+        PASSWORD = DbManagerUser!!.readDbDate("PASSWORD")
+
+        when(IdUser.size){
+            0 -> DbManagerUser?.insertToDb("0","0","0")
+        }
+        val dialogBuilder = AlertDialog.Builder(this.context)
+        val bindingChange = EntranceDesignDialogBinding.inflate(layoutInflater)
+        dialogBuilder.setView(bindingChange.root)
+
+        val dialog: AlertDialog = dialogBuilder.show()
+
+        val Btn_entrance = dialog.findViewById<Button>(R.id.entrance)
+        val Btn_registration = dialog.findViewById<Button>(R.id.registration_but)
+        val login = dialog.findViewById<EditText>(R.id.login)
+        val password = dialog.findViewById<EditText>(R.id.password)
+
+        Btn_registration.setOnClickListener {
+            DB_USER_REGISTRATION()
+            dialog.dismiss()
+        }
+        Btn_entrance.setOnClickListener {
+            var UserId_W = IdUser.size-1
+            while (UserId_W >= 0 ){
+
+                if (NAME[UserId_W] == login.text.toString()){
+                    if (PASSWORD[UserId_W] == password.text.toString()){
+                        MainActivity().prefs_fun(1)
+                        DB()
+                        dialog.dismiss()
+                    }
+                }
+                UserId_W--
+            }
+        }
+        dialog.setCancelable(false)
+        dialog.window?.setBackgroundDrawableResource(R.drawable.krujok)
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun DB_USER_REGISTRATION(){
+
+        val dialogBuilder = AlertDialog.Builder(this.context)
+        val bindingChange = RegistrationDialogBinding.inflate(layoutInflater)
+        dialogBuilder.setView(bindingChange.root)
+
+        val dialog: AlertDialog = dialogBuilder.show()
+
+        val Btn_entrance = dialog.findViewById<Button>(R.id.registration_but_1)
+        val login = dialog.findViewById<EditText>(R.id.name)
+        val password = dialog.findViewById<EditText>(R.id.password)
+        val password_1 = dialog.findViewById<EditText>(R.id.password_1)
+        val email = dialog.findViewById<EditText>(R.id.email)
+        val text = dialog.findViewById<TextView>(R.id.textView6)
+        val cancellation = dialog.findViewById<Button>(R.id.cancellation)
+
+        Btn_entrance.setOnClickListener {
+            if(
+                login.text.toString().isEmpty()
+                && password.text.toString().isEmpty()
+                && password_1.text.toString().isEmpty()
+                && email.text.toString().isEmpty()
+            ){
+                text.text = "Зваполните все поля"
+            }else {
+                if (login.text.toString().count() < 6) {
+                    text.text = "Логин должен состоять из 6 или больше символов"
+                } else if (password.text.toString().count() < 8) {
+                    text.text = "Пароль слишком короткий"
+                } else if (password.text.toString() != password_1.text.toString()) {
+                    text.text = "Пароль не совпадает"
+                } else if (email.text.toString().count() < 6) {
+                    text.text = "Email слишком короткий"
+                } else if (!email.text.toString().any("."::contains) && !email.text.toString()
+                        .any("@"::contains)
+                ) {
+                    text.text = "Email введён не коректно"
+                }else{
+                    MainActivity().prefs_fun(1)
+                    Log.d("adada",MainActivity().prefs?.getInt("Table",0).toString())
+                    DbManagerUser?.insertToDb(login.text.toString(),email.text.toString(),password.text.toString())
+                    dialog.dismiss()
+                    DB()
+                }
+            }
+        }
+        cancellation.setOnClickListener {
+            db_Entrance()
+            dialog.dismiss()
+        }
+
+        dialog.setCancelable(false)
+        dialog.window?.setBackgroundDrawableResource(R.drawable.krujok)
     }
 
     fun DB(){
@@ -191,7 +322,8 @@ class HomeFragment : Fragment() {
 
     override fun onDestroy() {
         val myDbManager = AdsDBManager(thiscontext!!)
-        super.onDestroy()
         myDbManager.closeDb()
+        DbManagerUser?.closeDb()
+        super.onDestroy()
     }
 }

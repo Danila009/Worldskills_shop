@@ -51,6 +51,5 @@ class UserDBManager(val context: Context) {
 
     fun closeDb(){
         AdsDBHelper.close()
-
     }
 }
