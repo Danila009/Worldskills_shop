@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     var navView:BottomNavigationView? = null
-    var prefs: SharedPreferences? = null
+
 
 
         override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
 
         navView =  binding.navView
 
-            prefs = getSharedPreferences("Table",Context.MODE_PRIVATE)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
@@ -49,12 +48,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
             navView!!.setupWithNavController(navController)
-    }
-
-    fun prefs_fun(res:Int){
-        val editor = prefs?.edit()
-        editor?.putInt("Table",res)
-        editor?.apply()
     }
 
 }

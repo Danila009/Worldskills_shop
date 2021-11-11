@@ -9,11 +9,13 @@ import android.graphics.drawable.Icon
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
 import androidx.core.net.toUri
+import com.example.worldskillsshop.ViewPager.ViewPagerAdapte
 import com.example.worldskillsshop.databinding.ActivityOpenAdsBinding
 import com.example.worldskillsshop.db.AdsDBManager
 
@@ -37,6 +39,13 @@ class OpenAdsA : AppCompatActivity() {
     var Time = ""
     var Viewing = ""
 
+    var Iamge_1 = ""
+    var Iamge_2 = ""
+    var Iamge_3 = ""
+    var Iamge_4 = ""
+
+    private lateinit var adapter:ViewPagerAdapte
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open_ads)
@@ -59,9 +68,18 @@ class OpenAdsA : AppCompatActivity() {
         id = intent.getStringExtra(MyIntent.I_Id).toString().toInt()
         Viewing = intent.getStringExtra(MyIntent.I_Viewing).toString()
 
+        Iamge_1 = intent.getStringExtra(MyIntent.AddImage_1).toString()
+        Iamge_2 = intent.getStringExtra(MyIntent.AddImage_2).toString()
+        Iamge_3 = intent.getStringExtra(MyIntent.AddImage_3).toString()
+        Iamge_4 = intent.getStringExtra(MyIntent.AddImage_4).toString()
+
+
+        adapter = ViewPagerAdapte(this,Iamge_1,Iamge_2,Iamge_3,Iamge_4)
+        binding.ViewPager.adapter = adapter
+
         binding.priceOpen.text = priceOpen
         binding.titleAnnouncementOpen.text = titleAnnouncementOpen
-        binding.productPhotoOpen.setImageURI(intent.getStringExtra(MyIntent.I_productPhoto)?.toUri())
+        //binding.productPhotoOpen.setImageURI(intent.getStringExtra(MyIntent.I_productPhoto)?.toUri())
         binding.descriptionOpen.text = intent.getStringExtra(MyIntent.I_Description)
         binding.Time.text = intent.getStringExtra(MyIntent.I_Time)
     }
@@ -69,19 +87,19 @@ class OpenAdsA : AppCompatActivity() {
     override fun onStart() {
         val y = Viewing.toInt()+1
         binding.Viewing.text = y.toString()
-        update(y.toString())
+        //update(y.toString())
         super.onStart()
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.open_ads_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
-    fun update(viewing:String){
+    /*fun update(viewing:String){
         myDbManager.openDb()
         myDbManager.updateItem(titleAnnouncementOpen,priceOpen,descriptionOpen,intent.getStringExtra(MyIntent.I_Phone).toString(),
             productPhotoOpen,"0","0",
             "0",Time,id,viewing)
-    }
+    }*/
 
     @SuppressLint("ResourceType")
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {

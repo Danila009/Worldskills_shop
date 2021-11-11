@@ -8,14 +8,13 @@
     android:background="@color/Gray">
 
 
-    <ImageView
-        android:id="@+id/productPhotoOpen"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/ViewPager"
         android:layout_width="0dp"
         android:layout_height="250dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/titleAnnouncementOpen"
@@ -27,7 +26,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/productPhotoOpen" />
+        app:layout_constraintTop_toBottomOf="@+id/ViewPager" />
 
     <TextView
         android:id="@+id/priceOpen"

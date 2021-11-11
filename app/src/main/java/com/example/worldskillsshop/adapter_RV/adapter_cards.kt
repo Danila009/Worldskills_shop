@@ -3,6 +3,7 @@ package com.example.worldskillsshop.adapter_RV
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,12 @@ class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.Card
                     putExtra(MyIntent.I_Phone, card.phone)
                     putExtra(MyIntent.I_Id, card.id)
                     putExtra(MyIntent.I_Viewing, card.Viewing)
+
+                    putExtra(MyIntent.AddImage_1, card.AddImage_1)
+                    putExtra(MyIntent.AddImage_2, card.AddImage_2)
+                    putExtra(MyIntent.AddImage_3, card.AddImage_3)
+                    putExtra(MyIntent.AddImage_4, card.AddImage_4)
+
                 }
                 context.startActivity(Intent)
             }

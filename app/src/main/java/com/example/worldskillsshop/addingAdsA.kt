@@ -58,48 +58,36 @@ class addingAdsA : AppCompatActivity() {
 
         binding.butAddImage.setOnClickListener {
 
-            val intent = Intent()
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(
-                Intent.createChooser(intent, "Select Picture"),
-                imageReguestCode)
+            startActivityForResult(intent, imageReguestCode)
             int_image = 1
             AddImageProver = true
         }
 
         binding.butAddImage2.setOnClickListener {
 
-            val intent = Intent()
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(
-                Intent.createChooser(intent, "Select Picture"),
-                imageReguestCode)
+            startActivityForResult(intent, imageReguestCode)
             int_image = 2
             AddImageProver_1 = true
         }
 
         binding.butAddImage3.setOnClickListener {
 
-            val intent = Intent()
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(
-                Intent.createChooser(intent, "Select Picture"),
-                imageReguestCode)
+            startActivityForResult(intent, imageReguestCode)
             int_image = 3
             AddImageProver_2 = true
         }
 
         binding.butAddImage4.setOnClickListener {
 
-            val intent = Intent()
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(
-                Intent.createChooser(intent, "Select Picture"),
-                imageReguestCode)
+            startActivityForResult(intent, imageReguestCode)
             int_image = 4
             AddImageProver_3 = true
         }
@@ -324,24 +312,16 @@ class addingAdsA : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == imageReguestCode) {
-            if (resultCode == AppCompatActivity.RESULT_OK) {
-                if (data != null) {
-                    try {
-                        //contentResolver.takePersistableUriPermission(data.data!!, Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-                        addingAds(data.data.toString())
-                        id = data.data.toString()
-                        when(int_image){
-                            1 -> AddImage = data.data.toString()
-                            2 -> AddImage_1 = data.data.toString()
-                            3 -> AddImage_2= data.data.toString()
-                            4 -> AddImage_3 = data.data.toString()
-                        }
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                }
+        if (requestCode == imageReguestCode&&resultCode == RESULT_OK) {
+            addingAds(data?.data.toString())
+            id = data?.data.toString()
+            when(int_image) {
+                1 -> AddImage = data?.data.toString()
+                2 -> AddImage_1 = data?.data.toString()
+                3 -> AddImage_2 = data?.data.toString()
+                4 -> AddImage_3 = data?.data.toString()
             }
+            contentResolver.takePersistableUriPermission(data?.data!!, Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
     }
 }
