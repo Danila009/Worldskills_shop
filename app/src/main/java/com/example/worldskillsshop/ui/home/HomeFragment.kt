@@ -115,14 +115,11 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         DbManagerUser?.openDb()
-        Log.d("adada",prefs?.getInt("Table",0).toString())
 
         if (prefs?.getInt("Table",0) == 0) {
-            Log.d("adada",prefs?.getInt("Table",0).toString())
             DB()
             db_Entrance()
         }else if (prefs?.getInt("Table",0) == 1){
-            Log.d("adada",prefs?.getInt("Table",0).toString())
             DB()
         }
     }
@@ -312,17 +309,18 @@ class HomeFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
     {
         inflater.inflate(R.menu.home_menu, menu);
-        super.onCreateOptionsMenu(menu,inflater)
-    }
 
-    fun search(){
+        val search = menu.findItem(R.id.app_bar_search)
 
-        binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        val SV = search?.actionView as SearchView
+        SV.queryHint = "Search something!"
+
+        SV.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return true
             }
-            override fun onQueryTextChange(p0: String?): Boolean {
 
+            override fun onQueryTextChange(p0: String?): Boolean {
                 val list = myDbManager?.readDbDate("", p0.toString())
                 Log.d("sadasdadsada",p0.toString())
                 //adapter?.updateAdapter(list)
@@ -330,14 +328,9 @@ class HomeFragment : Fragment() {
             }
         })
 
+        super.onCreateOptionsMenu(menu,inflater)
     }
 
-    @SuppressLint("ResourceType")
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        search = menu.findItem(R.id.app_bar_search)
-        search
-        super.onPrepareOptionsMenu(menu)
-    }
 
     override fun onDestroy() {
         myDbManager?.closeDb()
