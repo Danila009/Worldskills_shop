@@ -1,20 +1,28 @@
 package com.example.worldskillsshop.ui.notifications
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
+import android.os.UserManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.worldskillsshop.Intent
 import com.example.worldskillsshop.R
+import com.example.worldskillsshop.addingAdsA
 import com.example.worldskillsshop.databinding.FragmentNotificationsBinding
+import com.example.worldskillsshop.db.UserDBManager
 
 class NotificationsFragment : Fragment() {
 
@@ -23,8 +31,15 @@ class NotificationsFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+    var dbUser: UserDBManager? = null
+    var thiscontext: Context? = null
+
     val list = ArrayList<String>()
 
+    var IdUserDB:ArrayList<String>? = null
+    var NameUserDB:ArrayList<String>? = null
+
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,12 +62,21 @@ class NotificationsFragment : Fragment() {
 
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        thiscontext = container?.context
+
+        binding.username.text = DbDate("NAME")
+        binding.priseuser.text = DbDate("PRICE") + " руб."
+        binding.profileImage.setImageURI(DbDate("IMAGE").toUri())
 
         binding.List.adapter = ArrayAdapter(
             requireActivity().applicationContext,
             R.layout.text_color_white,
             list
         )
+
+        binding.butProgress.setOnClickListener {
+            progress()
+        }
 
         binding.List.setOnItemClickListener{_, view, i, _ ->
 
@@ -71,5 +95,22 @@ class NotificationsFragment : Fragment() {
         return root
     }
 
+    fun progress(){
+        val intent = android.content.Intent(thiscontext!!, com.example.worldskillsshop.progress::class.java)
+        startActivity(intent)
+    }
 
+
+    private fun DbDate(id:String):String{
+        dbUser =  UserDBManager(thiscontext!!)
+        dbUser?.openDb()
+        NameUserDB = dbUser?.readDbDate(id)
+        val Name = NameUserDB?.get(1)
+        return Name.toString()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        dbUser?.closeDb()
+    }
 }

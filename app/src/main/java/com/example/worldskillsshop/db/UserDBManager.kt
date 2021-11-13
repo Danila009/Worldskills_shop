@@ -14,11 +14,13 @@ class UserDBManager(val context: Context) {
         db = AdsDBHelper.writableDatabase
     }
 
-    fun insertToDb(NAME:String,EMAIL:String,PASSWORD:String){
+    fun insertToDb(NAME:String,EMAIL:String,PASSWORD:String, IMAGE:String, PRICE:String){
         val values = ContentValues().apply{
             put(UserDBNameClass.NAME, NAME)
             put(UserDBNameClass.EMAIL, EMAIL)
             put(UserDBNameClass.PASSWORD, PASSWORD)
+            put(UserDBNameClass.IMAGE, IMAGE)
+            put(UserDBNameClass.PRICE, PRICE)
         }
         db?.insert(UserDBNameClass.TABLE_USER, null, values)
     }
@@ -37,12 +39,16 @@ class UserDBManager(val context: Context) {
             val EMAIL = cursor.getString(cursor.getColumnIndex(UserDBNameClass.EMAIL))
             val PASSWORD = cursor.getString(cursor.getColumnIndex(UserDBNameClass.PASSWORD))
             val ID = cursor.getString(cursor.getColumnIndex(UserDBNameClass.ID))
+            val IMAGE = cursor.getString(cursor.getColumnIndex(UserDBNameClass.IMAGE))
+            val PRICE = cursor.getString(cursor.getColumnIndex(UserDBNameClass.PRICE))
 
             when(id){
                 "NAME" -> dataList.add(NAME)
                 "EMAIL" -> dataList.add(EMAIL)
                 "PASSWORD" -> dataList.add(PASSWORD)
                 "Id" -> dataList.add(ID)
+                "IMAGE" -> dataList.add(IMAGE)
+                "PRICE" -> dataList.add(PRICE)
             }
         }
         cursor.close()

@@ -39,10 +39,10 @@ class OpenAdsA : AppCompatActivity() {
     var Time = ""
     var Viewing = ""
 
-    var Iamge_1 = ""
-    var Iamge_2 = ""
-    var Iamge_3 = ""
-    var Iamge_4 = ""
+    var Image_1 = ""
+    var Image_2 = ""
+    var Image_3 = ""
+    var Image_4 = ""
 
     private lateinit var adapter:ViewPagerAdapte
 
@@ -68,18 +68,17 @@ class OpenAdsA : AppCompatActivity() {
         id = intent.getStringExtra(MyIntent.I_Id).toString().toInt()
         Viewing = intent.getStringExtra(MyIntent.I_Viewing).toString()
 
-        Iamge_1 = intent.getStringExtra(MyIntent.AddImage_1).toString()
-        Iamge_2 = intent.getStringExtra(MyIntent.AddImage_2).toString()
-        Iamge_3 = intent.getStringExtra(MyIntent.AddImage_3).toString()
-        Iamge_4 = intent.getStringExtra(MyIntent.AddImage_4).toString()
+        Image_1 = intent.getStringExtra(MyIntent.AddImage_1).toString()
+        Image_2 = intent.getStringExtra(MyIntent.AddImage_2).toString()
+        Image_3 = intent.getStringExtra(MyIntent.AddImage_3).toString()
+        Image_4 = intent.getStringExtra(MyIntent.AddImage_4).toString()
 
 
-        adapter = ViewPagerAdapte(this,Iamge_1,Iamge_2,Iamge_3,Iamge_4)
+        adapter = ViewPagerAdapte(this,Image_1,Image_2,Image_3,Image_4)
         binding.ViewPager.adapter = adapter
 
         binding.priceOpen.text = priceOpen
         binding.titleAnnouncementOpen.text = titleAnnouncementOpen
-        //binding.productPhotoOpen.setImageURI(intent.getStringExtra(MyIntent.I_productPhoto)?.toUri())
         binding.descriptionOpen.text = intent.getStringExtra(MyIntent.I_Description)
         binding.Time.text = intent.getStringExtra(MyIntent.I_Time)
     }
@@ -87,19 +86,51 @@ class OpenAdsA : AppCompatActivity() {
     override fun onStart() {
         val y = Viewing.toInt()+1
         binding.Viewing.text = y.toString()
-        //update(y.toString())
+        update(y.toString())
         super.onStart()
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.open_ads_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
-    /*fun update(viewing:String){
+    fun update(viewing:String){
         myDbManager.openDb()
+        if (Image_1!="0"&&Image_2=="0"&&Image_3=="0"&&Image_4=="0"){
+            ImageUpdate(viewing,Image_1,"0","0","0")
+        }else if (Image_1=="0"&&Image_2!="0"&&Image_3=="0"&&Image_4=="0"){
+            ImageUpdate(viewing,"0",Image_2,"0","0")
+        }else if (Image_1=="0"&&Image_2=="0"&&Image_3!="0"&&Image_4=="0"){
+            ImageUpdate(viewing,"0","0",Image_3,"0")
+        }else if (Image_1=="0"&&Image_2=="0"&&Image_3=="0"&&Image_4!="0"){
+            ImageUpdate(viewing,"0","0","0",Image_4)
+        }else if (Image_1=="0"&&Image_2=="0"&&Image_3!="0"&&Image_4!="0"){
+            ImageUpdate(viewing,"0","0",Image_3,Image_4)
+        }else if (Image_1!="0"&&Image_2=="0"&&Image_3!="0"&&Image_4=="0"){
+            ImageUpdate(viewing,Image_1,"0",Image_3,"0")
+        }else if (Image_1=="0"&&Image_2!="0"&&Image_3!="0"&&Image_4=="0"){
+            ImageUpdate(viewing,"0",Image_2,Image_3,"0")
+        }else if (Image_1!="0"&&Image_2!="0"&&Image_3=="0"&&Image_4=="0"){
+            ImageUpdate(viewing,Image_1,Image_2,"0","0")
+        }else if (Image_1!="0"&&Image_2!="0"&&Image_3=="0"&&Image_4!="0"){
+            ImageUpdate(viewing,Image_1,Image_2,"0",Image_4)
+        }else if (Image_1!="0"&&Image_2!="0"&&Image_3!="0"&&Image_4=="0"){
+            ImageUpdate(viewing,Image_1,Image_2,Image_3,"0")
+        }else if (Image_1=="0"&&Image_2!="0"&&Image_3!="0"&&Image_4!="0"){
+            ImageUpdate(viewing,"0",Image_2,Image_3,Image_4)
+        }else if (Image_1!="0"&&Image_2=="0"&&Image_3!="0"&&Image_4!="0"){
+            ImageUpdate(viewing,Image_1,"0",Image_3,Image_4)
+        }else if (Image_1!="0"&&Image_2!="0"&&Image_3!="0"&&Image_4!="0"){
+            ImageUpdate(viewing,Image_1,Image_2,Image_3,Image_4)
+        }else if (Image_1!="0"&&Image_2=="0"&&Image_3=="0"&&Image_4!="0"){
+            ImageUpdate(viewing,Image_1,"0","0",Image_4)
+        }
+    }
+
+    fun ImageUpdate(viewing: String,I1:String,I2:String,I3:String,I4:String){
         myDbManager.updateItem(titleAnnouncementOpen,priceOpen,descriptionOpen,intent.getStringExtra(MyIntent.I_Phone).toString(),
-            productPhotoOpen,"0","0",
-            "0",Time,id,viewing)
-    }*/
+            I1,I2,I3,
+            I4,Time,id,viewing)
+    }
 
     @SuppressLint("ResourceType")
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {

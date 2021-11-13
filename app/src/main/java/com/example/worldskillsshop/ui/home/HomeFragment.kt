@@ -3,29 +3,28 @@ package com.example.worldskillsshop.ui.home
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Button
-import android.widget.EditText
-import android.widget.SearchView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.worldskillsshop.MainActivity
 import com.example.worldskillsshop.R
 import com.example.worldskillsshop.adapter_RV.adapter_cards
 import com.example.worldskillsshop.data_history_RV.bank_cards
 import com.example.worldskillsshop.databinding.EntranceDesignDialogBinding
 import com.example.worldskillsshop.databinding.FragmentHomeBinding
+import com.example.worldskillsshop.databinding.ImageDialigBinding
 import com.example.worldskillsshop.databinding.RegistrationDialogBinding
 import com.example.worldskillsshop.db.AdsDBManager
 import com.example.worldskillsshop.db.UserDBManager
+import android.widget.*
+import de.hdodenhof.circleimageview.CircleImageView
 
 
 class HomeFragment : Fragment() {
@@ -33,17 +32,12 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
 
-    val PICK_FROM_GALLERY = 1
-
     var thiscontext: Context? = null
-
-    val imageReguestCode = 10
 
     var title = ""
     var price = 0
 
     var rv = 0
-    var image = ""
 
     var search:MenuItem? = null
 
@@ -74,6 +68,14 @@ class HomeFragment : Fragment() {
 
     var prefs:SharedPreferences? = null
 
+    var Login = ""
+    var Email = ""
+    var Password = ""
+    var ImageDialog = ""
+    var ImageButDiakog: CircleImageView? = null
+    var prover = 0
+
+    val imageReguestCode = 10
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -102,8 +104,6 @@ class HomeFragment : Fragment() {
         myDbManager = AdsDBManager(thiscontext!!)
         DbManagerUser = UserDBManager(thiscontext!!)
 
-        search()
-
 
         binding.floatingActionButton.setOnClickListener {
             com.example.worldskillsshop.Intent().open(thiscontext!!)
@@ -114,12 +114,10 @@ class HomeFragment : Fragment() {
     @SuppressLint("ApplySharedPref", "CommitPrefEdits", "UseRequireInsteadOfGet")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        Log.d("adada",prefs?.getInt("Table",0).toString())
+        DbManagerUser?.openDb()
 
         if (prefs?.getInt("Table",0) == 0) {
             Log.d("adada",prefs?.getInt("Table",0).toString())
-            DB()
             db_Entrance()
         }else if (prefs?.getInt("Table",0) == 1){
             Log.d("adada",prefs?.getInt("Table",0).toString())
@@ -127,8 +125,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun db_Entrance(){
-        DbManagerUser?.openDb()
+     fun db_Entrance(){
         BOL = DbManagerUser!!.readDbDate("BOL")
         IdUser = DbManagerUser!!.readDbDate("Id")
         NAME = DbManagerUser!!.readDbDate("NAME")
@@ -136,7 +133,7 @@ class HomeFragment : Fragment() {
         PASSWORD = DbManagerUser!!.readDbDate("PASSWORD")
 
         when(IdUser.size){
-            0 -> DbManagerUser?.insertToDb("0","0","0")
+            0 -> DbManagerUser?.insertToDb("0","0","0","0","0")
         }
         val dialogBuilder = AlertDialog.Builder(this.context)
         val bindingChange = EntranceDesignDialogBinding.inflate(layoutInflater)
@@ -167,7 +164,7 @@ class HomeFragment : Fragment() {
             }
         }
         dialog.setCancelable(false)
-        dialog.window?.setBackgroundDrawableResource(R.drawable.krujok)
+        dialog.window?.setBackgroundDrawableResource(R.drawable.krujok_dialog)
     }
 
     @SuppressLint("SetTextI18n")
@@ -209,8 +206,11 @@ class HomeFragment : Fragment() {
                 ) {
                     text.text = "Email введён не коректно"
                 }else{
-                    prefs_fun(1)
-                    DbManagerUser?.insertToDb(login.text.toString(),email.text.toString(),password.text.toString())
+                    Email = email.text.toString()
+                    Password = password.text.toString()
+                    Login = login.text.toString()
+
+                    DB_USERIMAGE()
                     dialog.dismiss()
                 }
             }
@@ -221,13 +221,53 @@ class HomeFragment : Fragment() {
         }
 
         dialog.setCancelable(false)
-        dialog.window?.setBackgroundDrawableResource(R.drawable.krujok)
+        dialog.window?.setBackgroundDrawableResource(R.drawable.krujok_dialog)
     }
 
     fun prefs_fun(res:Int){
         val editor = prefs?.edit()
         editor?.putInt("Table",res)
         editor?.apply()
+    }
+
+    fun DB_USERIMAGE(){
+
+        val dialogBuilder = AlertDialog.Builder(this.context)
+        val bindingChange = ImageDialigBinding.inflate(layoutInflater)
+        dialogBuilder.setView(bindingChange.root)
+
+        val dialogUser: AlertDialog = dialogBuilder.show()
+
+        val But = dialogUser.findViewById<Button>(R.id.button)
+        val ButP = dialogUser.findViewById<Button>(R.id.button2)
+        ImageButDiakog = dialogUser.findViewById(R.id.imageUserD)
+
+        ButP.setOnClickListener {
+            when(prover){
+                1->{
+                    DB()
+                    dialogUser.dismiss()
+                    prefs_fun(1)
+                    DbManagerUser?.insertToDb(Login,Email,Password,ImageDialog,(10000..100000).random().toString())
+                    DbManagerUser?.closeDb()
+                }
+            }
+        }
+
+        ImageButDiakog?.setOnClickListener {
+
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.type = "image/*"
+            startActivityForResult(intent, imageReguestCode)
+        }
+
+        But.setOnClickListener {
+            dialogUser.dismiss()
+            DB_USER_REGISTRATION()
+        }
+
+        dialogUser.setCancelable(false)
+        dialogUser.window?.setBackgroundDrawableResource(R.drawable.krujok_dialog)
     }
 
     fun DB(){
@@ -245,56 +285,20 @@ class HomeFragment : Fragment() {
         Time = myDbManager!!.readDbDate("Time","0")
         Viewing = myDbManager!!.readDbDate("Viewing","0")
 
-        when(Id.size){
-            0 ->myDbManager?.insertToDb("0","0","0","0","0","0","0","0", "0",
-                "0")
-        }
 
         var i = 100
-        val ran = Id.size-1
+        val ranD = Id.size-1
 
-        while (i != 0){
+        binding.RVHOME.layoutManager = GridLayoutManager(thiscontext, 2)
+        binding.RVHOME.adapter = adapter
 
-            binding.RVHOME.layoutManager = GridLayoutManager(thiscontext, 2)
-            binding.RVHOME.adapter = adapter
-
-            val ranD = (0..ran).random()
+        while (i != 0 && Id.size != 0){
             i--
+            ranD-1
 
-            if(AddImage[ranD] != "0"&& AddImage_1[ranD] == "0"&& AddImage_2[ranD] == "0"&&AddImage_3[ranD] =="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
-                adapter?.addCard(card)
-            }else if (AddImage_1[ranD] != "0"&&AddImage[ranD] =="0"&&AddImage_2[ranD]=="0"&&AddImage_3[ranD]=="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage_1[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
-                adapter?.addCard(card)
-            } else if (AddImage_2[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]=="0"&&AddImage_3[ranD]=="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage_2[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
-                adapter?.addCard(card)
-            } else if (AddImage_3[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]=="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage_3[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
-                adapter?.addCard(card)
-            }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]=="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
-                adapter?.addCard(card)
-            }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]=="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage_1[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
-                adapter?.addCard(card)
-            }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]!="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage_2[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
-                adapter?.addCard(card)
-            }else if (AddImage_3[ranD] == "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]=="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
-                adapter?.addCard(card)
-            }else if (AddImage_3[ranD] == "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]!="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
-                adapter?.addCard(card)
-            }else if (AddImage_3[ranD] == "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]!="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage_1[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
-                adapter?.addCard(card)
-            }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]!="0"){
-                val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
-                adapter?.addCard(card)
-            }
+            val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
+            adapter?.addCard(card)
+
         }
     }
 
@@ -330,7 +334,19 @@ class HomeFragment : Fragment() {
 
     override fun onDestroy() {
         myDbManager?.closeDb()
-        DbManagerUser?.closeDb()
         super.onDestroy()
+    }
+
+    @SuppressLint("UseRequireInsteadOfGet")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == imageReguestCode&&resultCode == AppCompatActivity.RESULT_OK) {
+            ImageDialog = data?.data.toString()
+            ImageButDiakog?.setImageURI(data?.data)
+            prover = 1
+
+            val resolver = activity!!.contentResolver
+            resolver.takePersistableUriPermission(data?.data!!, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
     }
 }
