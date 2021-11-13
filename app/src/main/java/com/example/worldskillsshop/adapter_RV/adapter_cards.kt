@@ -29,7 +29,22 @@ class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.Card
         fun bind(card: bank_cards) = with(binding){
 
             price.text = "${card.price} Р"
-            productPhoto.setImageURI(card.productPhoto.toUri())
+
+            when {
+                card.AddImage_1 != "0" -> {
+                    productPhoto.setImageURI(card.AddImage_1.toUri())
+                }
+                card.AddImage_2 != "0" -> {
+                    productPhoto.setImageURI(card.AddImage_2.toUri())
+                }
+                card.AddImage_3 != "0" -> {
+                    productPhoto.setImageURI(card.AddImage_3.toUri())
+                }
+                card.AddImage_4 != "0" -> {
+                    productPhoto.setImageURI(card.AddImage_4.toUri())
+                }
+            }
+
             titleAnnouncement.text = card.titleAnnouncement
 
             productPhoto.setOnClickListener {

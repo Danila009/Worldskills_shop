@@ -56,12 +56,17 @@ class ViewPagerAdapte(fragment:FragmentActivity,var Image_1:String,var Image_2: 
                         0->putString(IMAGEVP_1, Image_1)
                         1->putString(IMAGEVP_2, Image_2)
                     }
-                }else if(Image_1!="0"&&Image_2=="0"&&Image_3=="0"&&Image_4!="0"){
+                }else if(Image_1=="0"&&Image_2!="0"&&Image_3=="0"&&Image_4!="0"){
                     when(position){
                         0->putString(IMAGEVP_1, Image_1)
                         1->putString(IMAGEVP_4, Image_4)
                     }
 
+                }else if (Image_1=="0"&&Image_2!="0"&&Image_3=="0"&&Image_4!="0"){
+                    when(position){
+                        0->putString(IMAGEVP_2, Image_2)
+                        1->putString(IMAGEVP_4, Image_4)
+                    }
                 }
                 3-> if (Image_1!="0"&&Image_2=="0"&&Image_3!="0"&&Image_4!="0"){
                     when(position){
@@ -131,8 +136,8 @@ class ViewPagerAdapte(fragment:FragmentActivity,var Image_1:String,var Image_2: 
             i = 4
         }else if (Image_1!="0"&&Image_2=="0"&&Image_3=="0"&&Image_4!="0"){
             i = 2
-        }else{
-            i=1
+        }else if (Image_1=="0"&&Image_2!="0"&&Image_3=="0"&&Image_4!="0"){
+            i = 2
         }
         return i
     }

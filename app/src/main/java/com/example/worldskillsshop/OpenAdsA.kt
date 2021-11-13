@@ -123,6 +123,8 @@ class OpenAdsA : AppCompatActivity() {
             ImageUpdate(viewing,Image_1,Image_2,Image_3,Image_4)
         }else if (Image_1!="0"&&Image_2=="0"&&Image_3=="0"&&Image_4!="0"){
             ImageUpdate(viewing,Image_1,"0","0",Image_4)
+        }else if (Image_1=="0"&&Image_2!="0"&&Image_3=="0"&&Image_4!="0"){
+            ImageUpdate(viewing,"0",Image_2,"0",Image_4)
         }
     }
 

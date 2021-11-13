@@ -24,7 +24,6 @@ import com.example.worldskillsshop.databinding.RegistrationDialogBinding
 import com.example.worldskillsshop.db.AdsDBManager
 import com.example.worldskillsshop.db.UserDBManager
 import android.widget.*
-import de.hdodenhof.circleimageview.CircleImageView
 
 
 class HomeFragment : Fragment() {
@@ -38,6 +37,7 @@ class HomeFragment : Fragment() {
     var price = 0
 
     var rv = 0
+    var image = ""
 
     var search:MenuItem? = null
 
@@ -72,7 +72,7 @@ class HomeFragment : Fragment() {
     var Email = ""
     var Password = ""
     var ImageDialog = ""
-    var ImageButDiakog: CircleImageView? = null
+    var ImageButDiakog:ImageButton? = null
     var prover = 0
 
     val imageReguestCode = 10
@@ -115,9 +115,11 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         DbManagerUser?.openDb()
+        Log.d("adada",prefs?.getInt("Table",0).toString())
 
         if (prefs?.getInt("Table",0) == 0) {
             Log.d("adada",prefs?.getInt("Table",0).toString())
+            DB()
             db_Entrance()
         }else if (prefs?.getInt("Table",0) == 1){
             Log.d("adada",prefs?.getInt("Table",0).toString())
@@ -287,18 +289,23 @@ class HomeFragment : Fragment() {
 
 
         var i = 100
-        val ranD = Id.size-1
+        val ran = Id.size-1
+        var ranD = Id.size-1
 
         binding.RVHOME.layoutManager = GridLayoutManager(thiscontext, 2)
         binding.RVHOME.adapter = adapter
 
         while (i != 0 && Id.size != 0){
-            i--
-            ranD-1
 
+            i--
+
+            if (ranD > 0){
+                ranD--
+            }else if (ranD <= 0){
+                ranD = ran
+            }
             val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
             adapter?.addCard(card)
-
         }
     }
 
