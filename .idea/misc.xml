@@ -12,13 +12,14 @@
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/drawable/krujik_image.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/drawable/krujok.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/drawable/message_fon.xml" value="0.22552083333333334" />
-        <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/activity_adding_ads.xml" value="0.25" />
+        <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/activity_adding_ads.xml" value="0.22" />
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/activity_dialogue_open.xml" value="0.25" />
-        <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/activity_open_ads.xml" value="0.33" />
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/activity_progress.xml" value="0.16" />
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/announcement_rv.xml" value="0.33" />
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/basket_rv.xml" value="0.33" />
+        <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/category_item.xml" value="0.12704918032786885" />
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/coupons_rv.xml" value="0.25" />
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/dialog_adding_announced.xml" value="0.25" />
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/entrance_design_dialog.xml" value="0.25" />
@@ -26,6 +27,7 @@
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/fragment_ads_frag.xml" value="0.15" />
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/fragment_coupons_frag.xml" value="0.209375" />
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/fragment_dashboard.xml" value="0.33" />
+        <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/fragment_description.xml" value="0.22" />
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/fragment_home.xml" value="0.14" />
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/fragment_message_view.xml" value="0.22" />
         <entry key="..\:/Users/danbe/Desktop/Adroid Studio/Worldskillsshop/app/src/main/res/layout/fragment_notifications.xml" value="0.18" />

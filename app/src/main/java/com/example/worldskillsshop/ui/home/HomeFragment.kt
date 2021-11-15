@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.DrawableContainer
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -24,6 +25,16 @@ import com.example.worldskillsshop.databinding.RegistrationDialogBinding
 import com.example.worldskillsshop.db.AdsDBManager
 import com.example.worldskillsshop.db.UserDBManager
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
@@ -72,10 +83,12 @@ class HomeFragment : Fragment() {
     var Email = ""
     var Password = ""
     var ImageDialog = ""
-    var ImageButDiakog:ImageButton? = null
+    var ImageButDiakog: CircleImageView? = null
     var prover = 0
 
     val imageReguestCode = 10
+
+    private var job: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -104,8 +117,7 @@ class HomeFragment : Fragment() {
         myDbManager = AdsDBManager(thiscontext!!)
         DbManagerUser = UserDBManager(thiscontext!!)
 
-
-        binding.floatingActionButton.setOnClickListener {
+            binding.floatingActionButton.setOnClickListener {
             com.example.worldskillsshop.Intent().open(thiscontext!!)
         }
         return (root)
@@ -271,39 +283,77 @@ class HomeFragment : Fragment() {
 
     fun DB(){
 
-        myDbManager?.openDb()
-        Id = myDbManager!!.readDbDate("Id","0")
-        Phone = myDbManager!!.readDbDate("Phone","0")
-        PriceADS = myDbManager!!.readDbDate("PriceADS","0")
-        Description = myDbManager!!.readDbDate("Description","0")
-        COLUMN_titleADS = myDbManager!!.readDbDate("COLUMN_titleADS","0")
-        AddImage = myDbManager!!.readDbDate("AddImage","0")
-        AddImage_1 = myDbManager!!.readDbDate("AddImage_1","0")
-        AddImage_2 = myDbManager!!.readDbDate("AddImage_2","0")
-        AddImage_3 = myDbManager!!.readDbDate("AddImage_3","0")
-        Time = myDbManager!!.readDbDate("Time","0")
-        Viewing = myDbManager!!.readDbDate("Viewing","0")
+        job?.cancel()
+        job = CoroutineScope(Dispatchers.Main).launch {
+
+            myDbManager?.openDb()
+            Id = myDbManager!!.readDbDate("Id","0")
+            Phone = myDbManager!!.readDbDate("Phone","0")
+            PriceADS = myDbManager!!.readDbDate("PriceADS","0")
+            Description = myDbManager!!.readDbDate("Description","0")
+            COLUMN_titleADS = myDbManager!!.readDbDate("COLUMN_titleADS","0")
+            AddImage = myDbManager!!.readDbDate("AddImage","0")
+            AddImage_1 = myDbManager!!.readDbDate("AddImage_1","0")
+            AddImage_2 = myDbManager!!.readDbDate("AddImage_2","0")
+            AddImage_3 = myDbManager!!.readDbDate("AddImage_3","0")
+            Time = myDbManager!!.readDbDate("Time","0")
+            Viewing = myDbManager!!.readDbDate("Viewing","0")
 
 
-        var i = 100
-        val ran = Id.size-1
-        var ranD = Id.size-1
+            var i = 100
+            val ran = Id.size-1
+            var ranD = Id.size-1
 
-        binding.RVHOME.layoutManager = GridLayoutManager(thiscontext, 2)
-        binding.RVHOME.adapter = adapter
+            binding.RVHOME.layoutManager = GridLayoutManager(thiscontext, 2)
+            binding.RVHOME.adapter = adapter
 
-        while (i != 0 && Id.size != 0){
+            while (i != 0 && Id.size != 0){
 
-            i--
+                i--
 
-            if (ranD > 0){
-                ranD--
-            }else if (ranD <= 0){
-                ranD = ran
+                if (ranD > 0){
+                    ranD--
+                }else if (ranD <= 0){
+                    ranD = ran
+                }
+
+                if(AddImage[ranD] != "0"&& AddImage_1[ranD] == "0"&& AddImage_2[ranD] == "0"&&AddImage_3[ranD] =="0"){
+                    val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
+                    adapter?.addCard(card)
+                }else if (AddImage_1[ranD] != "0"&&AddImage[ranD] =="0"&&AddImage_2[ranD]=="0"&&AddImage_3[ranD]=="0"){
+                    val card = bank_cards(PriceADS[ranD],AddImage_1[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
+                    adapter?.addCard(card)
+                } else if (AddImage_2[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]=="0"&&AddImage_3[ranD]=="0"){
+                    val card = bank_cards(PriceADS[ranD],AddImage_2[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
+                    adapter?.addCard(card)
+                } else if (AddImage_3[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]=="0"){
+                    val card = bank_cards(PriceADS[ranD],AddImage_3[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
+                    adapter?.addCard(card)
+                }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]=="0"){
+                    val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
+                    adapter?.addCard(card)
+                }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]=="0"){
+                    val card = bank_cards(PriceADS[ranD],AddImage_1[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
+                    adapter?.addCard(card)
+                }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]!="0"){
+                    val card = bank_cards(PriceADS[ranD],AddImage_2[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
+                    adapter?.addCard(card)
+                }else if (AddImage_3[ranD] == "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]=="0"){
+                    val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
+                    adapter?.addCard(card)
+                }else if (AddImage_3[ranD] == "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]=="0"&&AddImage_2[ranD]!="0"){
+                    val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
+                    adapter?.addCard(card)
+                }else if (AddImage_3[ranD] == "0"&&AddImage[ranD]=="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]!="0"){
+                    val card = bank_cards(PriceADS[ranD],AddImage_1[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
+                    adapter?.addCard(card)
+                }else if (AddImage_3[ranD] != "0"&&AddImage[ranD]!="0"&&AddImage_1[ranD]!="0"&&AddImage_2[ranD]!="0"){
+                    val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
+                    adapter?.addCard(card)
+                }
             }
-            val card = bank_cards(PriceADS[ranD],AddImage[ranD],COLUMN_titleADS[ranD], Description[ranD], Time[ranD], Phone[ranD], Id[ranD],Viewing[ranD],AddImage[ranD],AddImage_1[ranD],AddImage_2[ranD],AddImage_3[ranD])
-            adapter?.addCard(card)
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
@@ -321,7 +371,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                val list = myDbManager?.readDbDate("", p0.toString())
+                //val list = myDbManager?.readDbDate("", p0.toString())
                 Log.d("sadasdadsada",p0.toString())
                 //adapter?.updateAdapter(list)
                 return true
@@ -331,11 +381,25 @@ class HomeFragment : Fragment() {
         super.onCreateOptionsMenu(menu,inflater)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean
+    {
+        val id = item.itemId
+        when (id)
+        {
+            R.id.description -> {
+                view?.findNavController()?.navigate(R.id.description2)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
 
     override fun onDestroy() {
         myDbManager?.closeDb()
         super.onDestroy()
     }
+
 
     @SuppressLint("UseRequireInsteadOfGet")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

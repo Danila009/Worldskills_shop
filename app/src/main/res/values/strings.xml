@@ -14,7 +14,7 @@
     <string name="Change_user">Сменить пользователя</string>
 
     <string-array name="category">
-        <item>Категория</item>
+        <item>Все</item>
         <item>Транспорт</item>
         <item>Недвижимость</item>
         <item>Работа</item>
@@ -30,6 +30,12 @@
     <string-array name="Sellers">
         <item>Частный</item>
         <item>Компания</item>
+    </string-array>
+
+    <string-array name="Sorting">
+        <item>По цене</item>
+        <item>По дате добавления</item>
+        <item>По популярности</item>
     </string-array>
 </resources>
 

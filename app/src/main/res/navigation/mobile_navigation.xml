@@ -120,4 +120,19 @@
         android:name="com.example.worldskillsshop.DialogueOpen"
         android:label="activity_dialogue_open"
         tools:layout="@layout/activity_dialogue_open" />
+    <activity
+        android:id="@+id/progress"
+        android:name="com.example.worldskillsshop.progress"
+        android:label="activity_progress"
+        tools:layout="@layout/activity_progress" />
+    <fragment
+        android:id="@+id/description2"
+        android:name="com.example.worldskillsshop.description"
+        android:label="fragment_description"
+        tools:layout="@layout/fragment_description" />
+    <fragment
+        android:id="@+id/openAds"
+        android:name="com.example.worldskillsshop.OpenAds"
+        android:label="fragment_open_ads"
+        tools:layout="@layout/fragment_open_ads" />
 </navigation>

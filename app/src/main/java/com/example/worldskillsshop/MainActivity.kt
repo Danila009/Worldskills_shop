@@ -1,32 +1,26 @@
 package com.example.worldskillsshop
 
-import android.app.PendingIntent.getActivity
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
-import android.net.Uri
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.service.controls.Control
-import android.util.Log
-import android.widget.SearchView
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.worldskillsshop.databinding.ActivityMainBinding
-import com.example.worldskillsshop.db.AdsDBManager
-import com.example.worldskillsshop.db.ListItem
-import java.util.ArrayList
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    var navView:BottomNavigationView? = null
+    private var backPressedTime:Long?=null
 
+    var navView:BottomNavigationView? = null
 
 
         override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +42,17 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
             navView!!.setupWithNavController(navController)
+    }
+
+
+    @SuppressLint("ShowToast")
+    override fun onBackPressed() {
+        if (backPressedTime!! + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed()
+        } else {
+            Toast.makeText(baseContext, "Нажмите еще раз для выхода", Toast.LENGTH_SHORT).show()
+        }
+        backPressedTime = System.currentTimeMillis()
     }
 
 }

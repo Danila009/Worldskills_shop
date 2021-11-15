@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.net.toUri
 import com.example.worldskillsshop.databinding.ActivityAddingAdsBinding
 import com.example.worldskillsshop.db.AdsDBManager
@@ -40,6 +42,17 @@ class addingAdsA : AppCompatActivity() {
     val myDbManager = AdsDBManager(this)
 
     var bar:ActionBar? = null
+
+    override fun onResume() {
+        super.onResume()
+        val category = resources.getStringArray(R.array.category)
+        val arrayAdapterCategory = ArrayAdapter(this, R.layout.category_item, category)
+        binding.category.setAdapter(arrayAdapterCategory)
+
+        val sellers = resources.getStringArray(R.array.Sellers)
+        val arrayAdapterSellers = ArrayAdapter(this, R.layout.category_item, sellers)
+        binding.sellers.setAdapter(arrayAdapterSellers)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

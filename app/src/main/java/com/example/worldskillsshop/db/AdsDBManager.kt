@@ -6,6 +6,8 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.ArrayList
 
 class AdsDBManager(val context: Context) {
@@ -36,7 +38,7 @@ class AdsDBManager(val context: Context) {
     }
 
     @SuppressLint("Range")
-    fun readDbDate(id:String, SearchText:String): ArrayList<String> {
+    suspend fun readDbDate(id:String, SearchText:String): ArrayList<String> = withContext(Dispatchers.IO) {
         val dataList = ArrayList<String>()
         val selector = "${AdsDBNameClass.COLUMN_titleADS} like ?"
         var cursor:Cursor? =null
@@ -93,7 +95,7 @@ class AdsDBManager(val context: Context) {
             }
         }
         cursor.close()
-        return dataList
+        return@withContext dataList
 
     }
 
