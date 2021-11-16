@@ -19,7 +19,9 @@ class AdsDBManager(val context: Context) {
         db = AdsDBHelper.writableDatabase
     }
 
-    fun insertToDb(COLUMN_titleADS:String, PriceADS:String, Description:String, Phone: String, AddImage:String, AddImage_1:String,AddImage_2:String,AddImage_3:String, Time:String, Viewing:String){
+     suspend fun insertToDb(COLUMN_titleADS:String, PriceADS:String, Description:String, Phone: String,
+                            AddImage:String, AddImage_1:String, AddImage_2:String, AddImage_3:String,
+                            Time:String, Viewing:String) = withContext(Dispatchers.IO){
         val values = ContentValues().apply {
 
             put(AdsDBNameClass.COLUMN_titleADS, COLUMN_titleADS)
@@ -99,7 +101,9 @@ class AdsDBManager(val context: Context) {
 
     }
 
-    fun updateItem(COLUMN_titleADS:String, PriceADS:String, Description:String, Phone: String, AddImage:String, AddImage_1:String,AddImage_2:String,AddImage_3:String, Time:String, Id:Int, Viewing:String){
+    suspend fun updateItem(COLUMN_titleADS:String, PriceADS:String, Description:String, Phone: String,
+                           AddImage:String, AddImage_1:String,AddImage_2:String,AddImage_3:String,
+                           Time:String, Id:Int, Viewing:String) = withContext(Dispatchers.IO){
         val selection = BaseColumns._ID + "=$Id"
         val values = ContentValues().apply {
 

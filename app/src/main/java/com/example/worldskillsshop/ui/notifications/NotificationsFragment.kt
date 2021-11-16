@@ -23,6 +23,9 @@ import com.example.worldskillsshop.R
 import com.example.worldskillsshop.addingAdsA
 import com.example.worldskillsshop.databinding.FragmentNotificationsBinding
 import com.example.worldskillsshop.db.UserDBManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class NotificationsFragment : Fragment() {
 

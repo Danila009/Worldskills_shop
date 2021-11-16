@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.ArrayList
 
 class UserDBManager(val context: Context) {
@@ -14,7 +16,8 @@ class UserDBManager(val context: Context) {
         db = AdsDBHelper.writableDatabase
     }
 
-    fun insertToDb(NAME:String,EMAIL:String,PASSWORD:String, IMAGE:String, PRICE:String){
+    suspend fun insertToDb(NAME:String,EMAIL:String,PASSWORD:String,
+                           IMAGE:String, PRICE:String) = withContext(Dispatchers.IO){
         val values = ContentValues().apply{
             put(UserDBNameClass.NAME, NAME)
             put(UserDBNameClass.EMAIL, EMAIL)

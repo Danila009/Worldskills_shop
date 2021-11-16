@@ -13,7 +13,7 @@ class ViewPagerAdapte(fragment:FragmentActivity,var Image_1:String,var Image_2: 
     }
 
 
-    override fun createFragment(position: Int): Fragment{
+     override fun createFragment(position: Int): Fragment{
         val fragment = ViewPager_image()
         fragment.arguments = Bundle().apply{
 

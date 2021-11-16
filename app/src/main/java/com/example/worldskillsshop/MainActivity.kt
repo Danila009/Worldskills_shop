@@ -43,18 +43,6 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
             navView!!.setupWithNavController(navController)
     }
-
-
-    @SuppressLint("ShowToast")
-    override fun onBackPressed() {
-        if (backPressedTime!! + 2000 > System.currentTimeMillis()) {
-            super.onBackPressed()
-        } else {
-            Toast.makeText(baseContext, "Нажмите еще раз для выхода", Toast.LENGTH_SHORT).show()
-        }
-        backPressedTime = System.currentTimeMillis()
-    }
-
 }
 
 

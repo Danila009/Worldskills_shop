@@ -12,9 +12,13 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.net.toUri
+import androidx.core.widget.doOnTextChanged
 import com.example.worldskillsshop.databinding.ActivityAddingAdsBinding
 import com.example.worldskillsshop.db.AdsDBManager
 import com.example.worldskillsshop.ui.home.HomeFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,11 +49,11 @@ class addingAdsA : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val category = resources.getStringArray(R.array.category)
+        val category = resources.getStringArray(R.array.categoryCreation)
         val arrayAdapterCategory = ArrayAdapter(this, R.layout.category_item, category)
         binding.category.setAdapter(arrayAdapterCategory)
 
-        val sellers = resources.getStringArray(R.array.Sellers)
+        val sellers = resources.getStringArray(R.array.SellersCreation)
         val arrayAdapterSellers = ArrayAdapter(this, R.layout.category_item, sellers)
         binding.sellers.setAdapter(arrayAdapterSellers)
     }
@@ -107,187 +111,180 @@ class addingAdsA : AppCompatActivity() {
 
         binding.proceed.setOnClickListener {
 
-            if (binding.titleADS.text.isNotEmpty()
-                && binding.PriceADS.text.isNotEmpty()
-                && binding.Phone.text.isNotEmpty()
-                && binding.Description.text.isNotEmpty()
+            if (binding.InputEditTextTitle.text.toString().isNotEmpty()
+                && binding.InputEditTextPrice.text.toString().isNotEmpty()
+                && binding.InputEditTextPhone.text.toString().isNotEmpty()
+                && binding.InputEditTextDescription.text.toString().isNotEmpty()
                 && int_image != 0
-                && binding.Phone.text.count() == 11
-                && binding.titleADS.text.count() <= 50
-                && binding.Description.text.count() <= 300
-                &&binding.PriceADS.text.toString().toInt() >= 100
+                && binding.InputEditTextPhone.text.toString().count() == 10
+                && binding.InputEditTextTitle.text.toString().count() <= 50
+                && binding.InputEditTextDescription.text.toString().count() <= 300
+                &&binding.InputEditTextPrice.text.toString().toInt() >= 100
             ) {
-                if (binding.PriceADS.text.toString().toInt() <= 100000000){
+                if (binding.InputEditTextPrice.text.toString().toInt() <= 100000000){
                     val intent = Intent(this, MainActivity::class.java)
 
-                    if (AddImageProver && !AddImageProver_1 && !AddImageProver_2 && !AddImageProver_3) {
-                        myDbManager.insertToDb(
-                            binding.titleADS.text.toString(),
-                            binding.PriceADS.text.toString(),
-                            binding.Description.text.toString(),
-                            binding.Phone.text.toString(),
-                            AddImage,
-                            "0",
-                            "0",
-                            "0",
-                            getCurrentTime(),
-                            "0")
-                    } else if (AddImageProver_1 && !AddImageProver && !AddImageProver_2 && !AddImageProver_3) {
-                        myDbManager.insertToDb(
-                            binding.titleADS.text.toString(),
-                            binding.PriceADS.text.toString(),
-                            binding.Description.text.toString(),
-                            binding.Phone.text.toString(),
-                            "0",
-                            AddImage_1,
-                            "0",
-                            "0",
-                            getCurrentTime(),
-                            "0"
-                        )
-                    } else if (AddImageProver_2 && !AddImageProver && !AddImageProver_1 && !AddImageProver_3) {
-                        myDbManager.insertToDb(
-                            binding.titleADS.text.toString(),
-                            binding.PriceADS.text.toString(),
-                            binding.Description.text.toString(),
-                            binding.Phone.text.toString(),
-                            "0",
-                            "0",
-                            AddImage_2,
-                            "0",
-                            getCurrentTime(),
-                            "0"
-                        )
-                    } else if (AddImageProver_3 && !AddImageProver && !AddImageProver_2 && !AddImageProver_1) {
-                        myDbManager.insertToDb(
-                            binding.titleADS.text.toString(),
-                            binding.PriceADS.text.toString(),
-                            binding.Description.text.toString(),
-                            binding.Phone.text.toString(),
-                            "0",
-                            "0",
-                            "0",
-                            AddImage_3,
-                            getCurrentTime(),
-                            "0"
-                        )
-                    } else if (AddImageProver && AddImageProver_1 && !AddImageProver_2 && !AddImageProver_3) {
-                        myDbManager.insertToDb(
-                            binding.titleADS.text.toString(),
-                            binding.PriceADS.text.toString(),
-                            binding.Description.text.toString(),
-                            binding.Phone.text.toString(),
-                            AddImage,
-                            AddImage_1,
-                            "0",
-                            "0",
-                            getCurrentTime(),
-                            "0"
-                        )
-                    } else if (AddImageProver_2 && AddImageProver_3 && !AddImageProver && !AddImageProver_1) {
-                        myDbManager.insertToDb(
-                            binding.titleADS.text.toString(), binding.PriceADS.text.toString(),
-                            binding.Description.text.toString(),
-                            binding.Phone.text.toString(),
-                            "0",
-                            "0",
-                            AddImage_2,
-                            AddImage_3,
-                            getCurrentTime(),
-                            "0"
-                        )
-                    } else if (AddImageProver && AddImageProver_2 && !AddImageProver_1 && !AddImageProver_3) {
-                        myDbManager.insertToDb(
-                            binding.titleADS.text.toString(),
-                            binding.PriceADS.text.toString(),
-                            binding.Description.text.toString(),
-                            binding.Phone.text.toString(),
-                            AddImage,
-                            "0",
-                            AddImage_2,
-                            "0",
-                            getCurrentTime(),
-                            "0"
-                        )
-                    } else if (AddImageProver_1 && AddImageProver_3 && !AddImageProver && !AddImageProver_2) {
-                        myDbManager.insertToDb(
-                            binding.titleADS.text.toString(),
-                            binding.PriceADS.text.toString(),
-                            binding.Description.text.toString(),
-                            binding.Phone.text.toString(),
-                            "0",
-                            AddImage_1,
-                            "0",
-                            AddImage_3,
-                            getCurrentTime(),
-                            "0"
-                        )
-                    } else if (AddImageProver && AddImageProver_3 && !AddImageProver_1 && !AddImageProver_2) {
-                        myDbManager.insertToDb(
-                            binding.titleADS.text.toString(),
-                            binding.PriceADS.text.toString(),
-                            binding.Description.text.toString(),
-                            binding.Phone.text.toString(),
-                            AddImage,
-                            "0",
-                            "0",
-                            AddImage_3,
-                            getCurrentTime(),
-                            "0"
-                        )
-                    } else if (AddImageProver_1 && AddImageProver_2 && !AddImageProver && !AddImageProver_3) {
-                        myDbManager.insertToDb(
-                            binding.titleADS.text.toString(),
-                            binding.PriceADS.text.toString(),
-                            binding.Description.text.toString(),
-                            binding.Phone.text.toString(),
-                            "0",
-                            AddImage_1,
-                            AddImage_2,
-                            "0",
-                            getCurrentTime(),
-                            "0"
-                        )
-                    } else if (AddImageProver && AddImageProver_2 && AddImageProver_1 && AddImageProver_3) {
-                        myDbManager.insertToDb(
-                            binding.titleADS.text.toString(),
-                            binding.PriceADS.text.toString(),
-                            binding.Description.text.toString(),
-                            binding.Phone.text.toString(),
-                            AddImage,
-                            AddImage_1,
-                            AddImage_2,
-                            AddImage_3,
-                            getCurrentTime(),
-                            "0"
-                        )
+                    CoroutineScope(Dispatchers.Main).launch {
+                        if (AddImageProver && !AddImageProver_1 && !AddImageProver_2 && !AddImageProver_3) {
+                            myDbManager.insertToDb(
+                                binding.InputEditTextTitle.text.toString(),
+                                binding.InputEditTextPrice.text.toString(),
+                                binding.InputEditTextDescription.text.toString(),
+                                binding.InputEditTextPhone.text!!.toString(),
+                                AddImage,
+                                "0",
+                                "0",
+                                "0",
+                                getCurrentTime(),
+                                "0")
+                        } else if (AddImageProver_1 && !AddImageProver && !AddImageProver_2 && !AddImageProver_3) {
+                            myDbManager.insertToDb(
+                                binding.InputEditTextTitle.text.toString(),
+                                binding.InputEditTextPrice.text.toString(),
+                                binding.InputEditTextDescription.text.toString(),
+                                binding.InputEditTextPhone.text!!.toString(),
+                                "0",
+                                AddImage_1,
+                                "0",
+                                "0",
+                                getCurrentTime(),
+                                "0"
+                            )
+                        } else if (AddImageProver_2 && !AddImageProver && !AddImageProver_1 && !AddImageProver_3) {
+                            myDbManager.insertToDb(
+                                binding.InputEditTextTitle.text.toString(),
+                                binding.InputEditTextPrice.text.toString(),
+                                binding.InputEditTextDescription.text.toString(),
+                                binding.InputEditTextPhone.text!!.toString(),
+                                "0",
+                                "0",
+                                AddImage_2,
+                                "0",
+                                getCurrentTime(),
+                                "0"
+                            )
+                        } else if (AddImageProver_3 && !AddImageProver && !AddImageProver_2 && !AddImageProver_1) {
+                            myDbManager.insertToDb(
+                                binding.InputEditTextTitle.text.toString(),
+                                binding.InputEditTextPrice.text.toString(),
+                                binding.InputEditTextDescription.text.toString(),
+                                binding.InputEditTextPhone.text!!.toString(),
+                                "0",
+                                "0",
+                                "0",
+                                AddImage_3,
+                                getCurrentTime(),
+                                "0"
+                            )
+                        } else if (AddImageProver && AddImageProver_1 && !AddImageProver_2 && !AddImageProver_3) {
+                            myDbManager.insertToDb(
+                                binding.InputEditTextTitle.text.toString(),
+                                binding.InputEditTextPrice.text.toString(),
+                                binding.InputEditTextDescription.text.toString(),
+                                binding.InputEditTextPhone.text!!.toString(),
+                                AddImage,
+                                AddImage_1,
+                                "0",
+                                "0",
+                                getCurrentTime(),
+                                "0"
+                            )
+                        } else if (AddImageProver_2 && AddImageProver_3 && !AddImageProver && !AddImageProver_1) {
+                            myDbManager.insertToDb(
+                                binding.InputEditTextTitle.text.toString(),
+                                binding.InputEditTextPrice.text.toString(),
+                                binding.InputEditTextDescription.text.toString(),
+                                binding.InputEditTextPhone.text!!.toString(),
+                                "0",
+                                "0",
+                                AddImage_2,
+                                AddImage_3,
+                                getCurrentTime(),
+                                "0"
+                            )
+                        } else if (AddImageProver && AddImageProver_2 && !AddImageProver_1 && !AddImageProver_3) {
+                            myDbManager.insertToDb(
+                                binding.InputEditTextTitle.text.toString(),
+                                binding.InputEditTextPrice.text.toString(),
+                                binding.InputEditTextDescription.text.toString(),
+                                binding.InputEditTextPhone.text!!.toString(),
+                                AddImage,
+                                "0",
+                                AddImage_2,
+                                "0",
+                                getCurrentTime(),
+                                "0"
+                            )
+                        } else if (AddImageProver_1 && AddImageProver_3 && !AddImageProver && !AddImageProver_2) {
+                            myDbManager.insertToDb(
+                                binding.InputEditTextTitle.text.toString(),
+                                binding.InputEditTextPrice.text.toString(),
+                                binding.InputEditTextDescription.text.toString(),
+                                binding.InputEditTextPhone.text!!.toString(),
+                                "0",
+                                AddImage_1,
+                                "0",
+                                AddImage_3,
+                                getCurrentTime(),
+                                "0"
+                            )
+                        } else if (AddImageProver && AddImageProver_3 && !AddImageProver_1 && !AddImageProver_2) {
+                            myDbManager.insertToDb(
+                                binding.InputEditTextTitle.text.toString(),
+                                binding.InputEditTextPrice.text.toString(),
+                                binding.InputEditTextDescription.text.toString(),
+                                binding.InputEditTextPhone.text!!.toString(),
+                                AddImage,
+                                "0",
+                                "0",
+                                AddImage_3,
+                                getCurrentTime(),
+                                "0"
+                            )
+                        } else if (AddImageProver_1 && AddImageProver_2 && !AddImageProver && !AddImageProver_3) {
+                            myDbManager.insertToDb(
+                                binding.InputEditTextTitle.text.toString(),
+                                binding.InputEditTextPrice.text.toString(),
+                                binding.InputEditTextDescription.text.toString(),
+                                binding.InputEditTextPhone.text!!.toString(),
+                                "0",
+                                AddImage_1,
+                                AddImage_2,
+                                "0",
+                                getCurrentTime(),
+                                "0"
+                            )
+                        } else if (AddImageProver && AddImageProver_2 && AddImageProver_1 && AddImageProver_3) {
+                            myDbManager.insertToDb(
+                                binding.InputEditTextTitle.text.toString(),
+                                binding.InputEditTextPrice.text.toString(),
+                                binding.InputEditTextDescription.text.toString(),
+                                binding.InputEditTextPhone.text!!.toString(),
+                                AddImage,
+                                AddImage_1,
+                                AddImage_2,
+                                AddImage_3,
+                                getCurrentTime(),
+                                "0"
+                            )
+                        }
+                        startActivity(intent)
                     }
-                    startActivity(intent)
+                } else if (binding.InputEditTextPhone.text.toString().count() != 9 || binding.InputEditTextPhone.text!!.isEmpty()) {
+                    Log.d("dsfsfssfdsd",binding.InputEditTextPhone.text.toString())
+                    binding.InputLayoutPhone.error = "Номер телефона ведён не коректно"
+                } else if (binding.InputEditTextDescription.text.toString().count() > 300 || binding.InputEditTextDescription.text.toString().isEmpty()) {
+                    binding.InputLayoutPhone.error = null
+                    bar?.title = "От 1 до 300 символов в описание"
+                } else if (binding.InputEditTextTitle.text.toString().count() > 50 || binding.InputEditTextTitle.text.toString().isEmpty()) {
+                    binding.InputLayoutPhone.error = null
+                    bar?.title = "От 1 до 50 символов в название"
+                } else if (binding.InputEditTextPrice.text.toString().toInt() > 100000000 || binding.InputEditTextPrice.text.toString().isEmpty() || binding.InputEditTextPrice.text.toString().count().toString().toInt() < 100) {
+                    binding.InputLayoutPhone.error = null
+                    bar?.title = "От 100 до 100000000 руб."
+                } else if (int_image == 0) {
+                    bar?.title = "Загрузите фото"
                 }
-            } else if (binding.Phone.text.count() != 11 || binding.Phone.text.isEmpty()) {
-                binding.Phone.setTextColor(Color.RED)
-                bar?.title = "Номер введен некорректно"
-            } else if (binding.Description.text.count() > 300 || binding.Description.text.isEmpty()) {
-                binding.Description.setTextColor(Color.RED)
-                binding.Phone.setTextColor(Color.GREEN)
-                bar?.title = "От 1 до 300 символов в описание"
-            } else if (binding.titleADS.text.count() > 50 || binding.titleADS.text.isEmpty()) {
-                binding.Description.setTextColor(Color.GREEN)
-                binding.titleADS.setTextColor(Color.RED)
-                binding.Phone.setTextColor(Color.GREEN)
-                bar?.title = "От 1 до 50 символов в название"
-            } else if (binding.PriceADS.text.toString().toInt() > 100000000 || binding.PriceADS.text.isEmpty() || binding.PriceADS.text.count().toString().toInt() < 100) {
-                binding.PriceADS.setTextColor(Color.RED)
-                binding.Description.setTextColor(Color.GREEN)
-                binding.titleADS.setTextColor(Color.GREEN)
-                binding.Phone.setTextColor(Color.GREEN)
-                bar?.title = "От 100 до 100000000 руб."
-            } else if (int_image == 0) {
-                binding.PriceADS.setTextColor(Color.GREEN)
-                binding.Description.setTextColor(Color.GREEN)
-                binding.titleADS.setTextColor(Color.GREEN)
-                binding.Phone.setTextColor(Color.GREEN)
-                bar?.title = "Загрузите фото"
             }
         }
     }

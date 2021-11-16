@@ -137,15 +137,17 @@ class HomeFragment : Fragment() {
     }
 
      fun db_Entrance(){
-        BOL = DbManagerUser!!.readDbDate("BOL")
-        IdUser = DbManagerUser!!.readDbDate("Id")
-        NAME = DbManagerUser!!.readDbDate("NAME")
-        EMAIL = DbManagerUser!!.readDbDate("EMAIL")
-        PASSWORD = DbManagerUser!!.readDbDate("PASSWORD")
+         CoroutineScope(Dispatchers.Main).launch{
+             BOL = DbManagerUser!!.readDbDate("BOL")
+             IdUser = DbManagerUser!!.readDbDate("Id")
+             NAME = DbManagerUser!!.readDbDate("NAME")
+             EMAIL = DbManagerUser!!.readDbDate("EMAIL")
+             PASSWORD = DbManagerUser!!.readDbDate("PASSWORD")
 
-        when(IdUser.size){
-            0 -> DbManagerUser?.insertToDb("0","0","0","0","0")
-        }
+             when(IdUser.size){
+                 0 -> DbManagerUser?.insertToDb("0","0","0","0","0")
+             }
+         }
         val dialogBuilder = AlertDialog.Builder(this.context)
         val bindingChange = EntranceDesignDialogBinding.inflate(layoutInflater)
         dialogBuilder.setView(bindingChange.root)
@@ -188,11 +190,10 @@ class HomeFragment : Fragment() {
         val dialog: AlertDialog = dialogBuilder.show()
 
         val Btn_entrance = dialog.findViewById<Button>(R.id.registration_but_1)
-        val login = dialog.findViewById<EditText>(R.id.name)
-        val password = dialog.findViewById<EditText>(R.id.password)
-        val password_1 = dialog.findViewById<EditText>(R.id.password_1)
-        val email = dialog.findViewById<EditText>(R.id.email)
-        val text = dialog.findViewById<TextView>(R.id.textView6)
+        val login = dialog.findViewById<EditText>(R.id.InputEditTextName)
+        val password = dialog.findViewById<EditText>(R.id.InputEditTextPassword)
+        val password_1 = dialog.findViewById<EditText>(R.id.InputEditTextPassword2)
+        val email = dialog.findViewById<EditText>(R.id.InputEditTextEmail)
         val cancellation = dialog.findViewById<Button>(R.id.cancellation)
 
         Btn_entrance.setOnClickListener {
@@ -202,20 +203,20 @@ class HomeFragment : Fragment() {
                 && password_1.text.toString().isEmpty()
                 && email.text.toString().isEmpty()
             ){
-                text.text = "Зваполните все поля"
+                //text.text = "Зваполните все поля"
             }else {
                 if (login.text.toString().count() < 6) {
-                    text.text = "Логин должен состоять из 6 или больше символов"
+                    //text.text = "Логин должен состоять из 6 или больше символов"
                 } else if (password.text.toString().count() < 8) {
-                    text.text = "Пароль слишком короткий"
+                    //text.text = "Пароль слишком короткий"
                 } else if (password.text.toString() != password_1.text.toString()) {
-                    text.text = "Пароль не совпадает"
+                    //text.text = "Пароль не совпадает"
                 } else if (email.text.toString().count() < 6) {
-                    text.text = "Email слишком короткий"
+                    //text.text = "Email слишком короткий"
                 } else if (!email.text.toString().any("."::contains) && !email.text.toString()
                         .any("@"::contains)
                 ) {
-                    text.text = "Email введён не коректно"
+                    //text.text = "Email введён не коректно"
                 }else{
                     Email = email.text.toString()
                     Password = password.text.toString()
@@ -259,8 +260,10 @@ class HomeFragment : Fragment() {
                     DB()
                     dialogUser.dismiss()
                     prefs_fun(1)
-                    DbManagerUser?.insertToDb(Login,Email,Password,ImageDialog,(10000..100000).random().toString())
-                    DbManagerUser?.closeDb()
+                    CoroutineScope(Dispatchers.Main).launch{
+                        DbManagerUser?.insertToDb(Login,Email,Password,ImageDialog,(10000..100000).random().toString())
+                        DbManagerUser?.closeDb()
+                    }
                 }
             }
         }

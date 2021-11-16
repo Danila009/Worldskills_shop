@@ -5,10 +5,12 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import com.example.worldskillsshop.databinding.FragmentDescriptionBinding
 import com.example.worldskillsshop.databinding.FragmentHomeBinding
 
@@ -27,9 +29,9 @@ class description : Fragment() {
         val arrayAdapterSellers = ArrayAdapter(requireContext(), R.layout.category_item, sellers)
         binding.sellers.setAdapter(arrayAdapterSellers)
 
-        val Sorting = resources.getStringArray(R.array.Sellers)
+        val Sorting = resources.getStringArray(R.array.Sorting)
         val arrayAdapterSorting = ArrayAdapter(requireContext(), R.layout.category_item, Sorting)
-        binding.sellers.setAdapter(arrayAdapterSorting)
+        binding.sort.setAdapter(arrayAdapterSorting)
     }
 
     override fun onCreateView(
@@ -45,5 +47,15 @@ class description : Fragment() {
         setHasOptionsMenu(true)
 
         return root
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean
+    {
+        val id = item.itemId
+        when (id)
+        {
+            android.R.id.home -> view?.findNavController()?.navigate(R.id.navigation_home)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

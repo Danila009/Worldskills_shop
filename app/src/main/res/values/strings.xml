@@ -13,6 +13,19 @@
     <string name="Delete_history">Delete_history</string>
     <string name="Change_user">Сменить пользователя</string>
 
+    <string-array name="categoryCreation">
+        <item>Транспорт</item>
+        <item>Недвижимость</item>
+        <item>Работа</item>
+        <item>Услуги</item>
+        <item>Личные вещи</item>
+        <item>Для дома и дачи</item>
+        <item>Электроника</item>
+        <item>Хобби и отдых</item>
+        <item>Животные</item>
+        <item>Готовый бизнес и оборудование</item>
+    </string-array>
+
     <string-array name="category">
         <item>Все</item>
         <item>Транспорт</item>
@@ -27,13 +40,20 @@
         <item>Готовый бизнес и оборудование</item>
     </string-array>
 
+    <string-array name="SellersCreation">
+        <item>Частный</item>
+        <item>Компания</item>
+    </string-array>
+
     <string-array name="Sellers">
+        <item>Все</item>
         <item>Частный</item>
         <item>Компания</item>
     </string-array>
 
     <string-array name="Sorting">
-        <item>По цене</item>
+        <item>По цене (Возростание)</item>
+        <item>По цене (Убывание)</item>
         <item>По дате добавления</item>
         <item>По популярности</item>
     </string-array>

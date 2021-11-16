@@ -18,6 +18,9 @@ import androidx.core.net.toUri
 import com.example.worldskillsshop.ViewPager.ViewPagerAdapte
 import com.example.worldskillsshop.databinding.ActivityOpenAdsBinding
 import com.example.worldskillsshop.db.AdsDBManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class OpenAdsA : AppCompatActivity() {
 
@@ -129,9 +132,11 @@ class OpenAdsA : AppCompatActivity() {
     }
 
     fun ImageUpdate(viewing: String,I1:String,I2:String,I3:String,I4:String){
-        myDbManager.updateItem(titleAnnouncementOpen,priceOpen,descriptionOpen,intent.getStringExtra(MyIntent.I_Phone).toString(),
-            I1,I2,I3,
-            I4,Time,id,viewing)
+        CoroutineScope(Dispatchers.Main).launch{
+            myDbManager.updateItem(titleAnnouncementOpen,priceOpen,descriptionOpen,intent.getStringExtra(MyIntent.I_Phone).toString(),
+                I1,I2,I3,
+                I4,Time,id,viewing)
+        }
     }
 
     @SuppressLint("ResourceType")
