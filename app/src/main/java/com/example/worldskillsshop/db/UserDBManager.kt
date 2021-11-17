@@ -17,13 +17,14 @@ class UserDBManager(val context: Context) {
     }
 
     suspend fun insertToDb(NAME:String,EMAIL:String,PASSWORD:String,
-                           IMAGE:String, PRICE:String) = withContext(Dispatchers.IO){
+                           IMAGE:String, PRICE:String, date:String) = withContext(Dispatchers.IO){
         val values = ContentValues().apply{
             put(UserDBNameClass.NAME, NAME)
             put(UserDBNameClass.EMAIL, EMAIL)
             put(UserDBNameClass.PASSWORD, PASSWORD)
             put(UserDBNameClass.IMAGE, IMAGE)
             put(UserDBNameClass.PRICE, PRICE)
+            put(UserDBNameClass.date, date)
         }
         db?.insert(UserDBNameClass.TABLE_USER, null, values)
     }

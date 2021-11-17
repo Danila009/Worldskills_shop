@@ -10,8 +10,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cornerRadius="20dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        app:cornerRadius="20dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -29,24 +29,10 @@
                 android:src="@drawable/addplus"
                 app:civ_border_color="#FF000000"
                 app:civ_border_width="2dp"
-                app:layout_constraintBottom_toTopOf="@+id/button"
+                app:layout_constraintBottom_toTopOf="@+id/textView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="Добавте фото"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/imageUserD"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button"
@@ -55,6 +41,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginBottom="16dp"
                 android:text="Назад"
+                android:textColor="@color/ic_launcher_background"
                 app:cornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -66,9 +53,56 @@
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="16dp"
                 android:text="Завершить"
+                android:textColor="@color/ic_launcher_background"
                 app:cornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
+
+            <CalendarView
+                android:id="@+id/calendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/message_fon"
+                android:maxDate="11/17/2005"
+                android:minDate="1/1/1920"
+                app:layout_constraintBottom_toTopOf="@+id/button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:text="Выберите дату рождения"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/textView12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="(После регистрации дату нельзя будет изменить)"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/calendar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Выберите фото"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/imageUserD"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

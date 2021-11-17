@@ -37,6 +37,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
+
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
@@ -90,6 +91,8 @@ class HomeFragment : Fragment() {
 
     private var job: Job? = null
 
+    var date = ""
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -102,7 +105,7 @@ class HomeFragment : Fragment() {
         setHasOptionsMenu(true)
 
         homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+            ViewModelProvider(this)[HomeViewModel::class.java]
 
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -138,14 +141,14 @@ class HomeFragment : Fragment() {
 
      fun db_Entrance(){
          CoroutineScope(Dispatchers.Main).launch{
-             BOL = DbManagerUser!!.readDbDate("BOL")
+             //BOL = DbManagerUser!!.readDbDate("BOL")
              IdUser = DbManagerUser!!.readDbDate("Id")
              NAME = DbManagerUser!!.readDbDate("NAME")
              EMAIL = DbManagerUser!!.readDbDate("EMAIL")
              PASSWORD = DbManagerUser!!.readDbDate("PASSWORD")
 
              when(IdUser.size){
-                 0 -> DbManagerUser?.insertToDb("0","0","0","0","0")
+                 0 -> DbManagerUser?.insertToDb("0","0","0","0","0","0")
              }
          }
         val dialogBuilder = AlertDialog.Builder(this.context)
@@ -252,7 +255,13 @@ class HomeFragment : Fragment() {
 
         val But = dialogUser.findViewById<Button>(R.id.button)
         val ButP = dialogUser.findViewById<Button>(R.id.button2)
+        val calendar = dialogUser.findViewById<CalendarView>(R.id.calendar)
         ImageButDiakog = dialogUser.findViewById(R.id.imageUserD)
+
+        calendar.setOnDateChangeListener{ _, year, month, dayOfMonth ->
+
+            date = "$dayOfMonth-$month-$year"
+        }
 
         ButP.setOnClickListener {
             when(prover){
@@ -261,7 +270,7 @@ class HomeFragment : Fragment() {
                     dialogUser.dismiss()
                     prefs_fun(1)
                     CoroutineScope(Dispatchers.Main).launch{
-                        DbManagerUser?.insertToDb(Login,Email,Password,ImageDialog,(10000..100000).random().toString())
+                        DbManagerUser?.insertToDb(Login,Email,Password,ImageDialog,(10000..100000).random().toString(),date)
                         DbManagerUser?.closeDb()
                     }
                 }

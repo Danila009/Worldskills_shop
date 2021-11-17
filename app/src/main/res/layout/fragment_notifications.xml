@@ -24,8 +24,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/button_color"
+        app:layout_constraintBottom_toTopOf="@+id/List"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -103,4 +103,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
