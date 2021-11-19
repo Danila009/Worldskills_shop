@@ -46,6 +46,7 @@
             android:layout_marginEnd="16dp"
             android:text="Оплатить"
             android:textAlignment="gravity"
+            android:textColor="@color/ic_launcher_background"
             app:backgroundTint="#FF0000"
             app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/textView3"
@@ -58,7 +59,7 @@
         android:id="@+id/recyclerView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintBottom_toTopOf="@+id/open_cup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -69,6 +70,17 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/open_cup"
+        android:layout_width="90dp"
+        android:layout_height="17dp"
+        android:background="@drawable/basket"
+        android:backgroundTint="#151515"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintEnd_toEndOf="@+id/List"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.worldskillsshop.data_history_RV.bank_cards
 import com.example.worldskillsshop.*
 import com.example.worldskillsshop.databinding.AnnouncementRvBinding
+import com.example.worldskillsshop.db.BasketDBManager
 import com.example.worldskillsshop.db.ListItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.CardHolder>() {
 
@@ -23,6 +27,7 @@ class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.Card
 
         var binding = AnnouncementRvBinding.bind(item)
         val context = contextV
+
         var build = false
 
         @SuppressLint("SetTextI18n")
@@ -69,6 +74,18 @@ class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.Card
                 }
                 context.startActivity(Intent)
             }
+
+            basketBut.setOnClickListener {
+                val Db = BasketDBManager(context)
+
+                Db.openDb()
+                CoroutineScope(Dispatchers.Main).launch {
+                    Db.insertDb(card.titleAnnouncement,card.price,card.description,
+                        card.phone,card.AddImage_1,
+                        card.AddImage_2,card.AddImage_3,card.AddImage_4,card.time,card.Viewing)
+                }
+            }
+
 
             heart.setOnClickListener {
 

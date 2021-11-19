@@ -24,15 +24,15 @@ class adapter_basket: RecyclerView.Adapter<adapter_basket.CardHolder>() {
             productPhotoBasket.setImageURI(card.productPhoto.toUri())
             titleAnnouncementBasket.text = card.titleAnnouncement
             description.text = card.description
-            priceBasket.text = card.price.toString()
+            priceBasket.text = card.price + " руб."
         }
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): adapter_basket.CardHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.basket_rv, parent, false)
 
-        return adapter_basket.CardHolder(view)
+        return CardHolder(view)
     }
 
 
@@ -41,6 +41,7 @@ class adapter_basket: RecyclerView.Adapter<adapter_basket.CardHolder>() {
         return CardList.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addCard(card:basket){
 
         CardList.add(card)

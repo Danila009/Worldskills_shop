@@ -13,6 +13,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.worldskillsshop.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 
 class MainActivity : AppCompatActivity() {
 

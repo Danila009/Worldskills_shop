@@ -1,5 +1,6 @@
 package com.example.worldskillsshop.adapter_RV
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,6 +44,7 @@ class adapter_coupon: RecyclerView.Adapter<adapter_coupon.CardHolder>() {
         return CardList.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addCard(card:сoupon){
 
         CardList.add(card)

@@ -92,7 +92,7 @@ class OpenAdsA : AppCompatActivity() {
         update(y.toString())
         super.onStart()
     }
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.open_ads_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
