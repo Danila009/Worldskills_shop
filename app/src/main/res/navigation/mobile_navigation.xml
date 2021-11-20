@@ -135,4 +135,8 @@
         android:name="com.example.worldskillsshop.OpenAds"
         android:label="fragment_open_ads"
         tools:layout="@layout/fragment_open_ads" />
+    <activity
+        android:id="@+id/settings_JC"
+        android:name="com.example.worldskillsshop.Settings_JC"
+        android:label="Settings_JC" />
 </navigation>

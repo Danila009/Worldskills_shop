@@ -57,5 +57,6 @@
         <item>По дате добавления</item>
         <item>По популярности</item>
     </string-array>
+    <string name="title_activity_settings_jc">Settings_JC</string>
 </resources>
 

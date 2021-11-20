@@ -90,7 +90,7 @@ class NotificationsFragment : Fragment() {
                 3-> view.findNavController().navigate(R.id.reviews_frag)
                 4-> view.findNavController().navigate(R.id.favorites_frag)
                 5-> view.findNavController().navigate(R.id.coupons_frag)
-                6-> view.findNavController().navigate(R.id.settings_frag)
+                6-> view.findNavController().navigate(R.id.settings_JC)
             }
             list.clear()
         }
