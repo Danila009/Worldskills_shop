@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.worldskillsshop.R
 import com.example.worldskillsshop.data_history_RV.basket
 import com.example.worldskillsshop.databinding.BasketRvBinding
+import com.example.worldskillsshop.db.BasketDBManager
 
 class adapter_basket: RecyclerView.Adapter<adapter_basket.CardHolder>() {
 
@@ -46,6 +47,14 @@ class adapter_basket: RecyclerView.Adapter<adapter_basket.CardHolder>() {
 
         CardList.add(card)
         notifyDataSetChanged()
+    }
+
+    fun removeItem(pos:Int, list:ArrayList<String>,db:BasketDBManager){
+
+        db.removeDb(list[pos])
+        CardList.removeAt(pos)
+        notifyItemRangeChanged(0,CardList.size)
+        notifyItemRemoved(pos)
     }
 
     override fun onBindViewHolder(holder: CardHolder, position: Int) {

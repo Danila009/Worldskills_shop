@@ -17,9 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.worldskillsshop.JC.CountrySelection
-import com.example.worldskillsshop.JC.Text_Settings
+import com.example.worldskillsshop.JC.*
 import com.example.worldskillsshop.ui.theme.Gray_14
 import com.example.worldskillsshop.ui.theme.Gray_20
 import com.example.worldskillsshop.ui.theme.WorldskillsShopTheme
@@ -29,7 +27,9 @@ class Settings_JC : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             WorldskillsShopTheme {
+
                 Greeting()
+
             }
         }
     }
@@ -42,72 +42,78 @@ fun Greeting() {
     val checkedState = remember { mutableStateOf(true) }
     val textColor = remember { mutableStateOf(Color.Unspecified) }
     var sliderPosition by remember{mutableStateOf(14f)}
+    var SpinnerText:FontFamily by remember{mutableStateOf(FontFamily.Default)}
+
 
 
     WorldskillsShopTheme {
         LaunchedEffect(Unit) { scrollState.animateScrollTo(10000) }
-        Column(
-            modifier = Modifier
-                .verticalScroll(scrollState)
-                .background(color = Gray_14)
-                .fillMaxWidth()
-                .fillMaxHeight()
-        ){
-            Row(modifier = Modifier
-                .clip(RoundedCornerShape(30.dp))
-                .fillMaxWidth()
-                .padding(5.dp)
-                .background(color = Gray_20)
-            ) {
 
-                Text_Settings(text = "Уведомления", size = sliderPosition, family = "",
-                    15,
-                    23,
-                    20,
-                    0)
+        Column {
+            ToolBar("Настройки", SpinnerText,sliderPosition+2,context)
 
-                Column {
-                    Switch(checked = checkedState.value, onCheckedChange = {
-                        checkedState.value = it
-                        if(checkedState.value) textColor.value = Color(0xFFFF0000)
-                        else textColor.value = Color.Unspecified
-                    }, modifier = Modifier.padding(start = 5.dp,bottom = 20.dp,top = 20.dp))
+            Column(
+                modifier = Modifier
+                    .verticalScroll(scrollState)
+                    .background(color = Gray_14)
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+            ){
+
+
+                Row(modifier = Modifier
+                    .clip(RoundedCornerShape(30.dp))
+                    .fillMaxWidth()
+                    .padding(5.dp)
+                    .background(color = Gray_20)
+                ) {
+
+                    Text_Settings(text = "Уведомления", size = sliderPosition, family = SpinnerText,Modifier.padding(start = 15.dp,top = 23.dp,end = 0.dp,bottom = 20.dp))
+
+                    Column {
+                        Switch(checked = checkedState.value, onCheckedChange = {
+                            checkedState.value = it
+                            if(checkedState.value) textColor.value = Color(0xFF292828)
+                            else textColor.value = Color.Unspecified
+                        }, modifier = Modifier.padding(start = 5.dp,bottom = 20.dp,top = 20.dp))
+                    }
                 }
-            }
-            Column(modifier = Modifier
-                .clip(RoundedCornerShape(30.dp))
-                .fillMaxWidth()
-                .padding(5.dp)
-                .background(color = Gray_20)) {
+                Column(modifier = Modifier
+                    .clip(RoundedCornerShape(30.dp))
+                    .fillMaxWidth()
+                    .padding(5.dp)
+                    .background(color = Gray_20)) {
 
-                Text_Settings(text = "Размер шрифта: $sliderPosition", size = sliderPosition, family = "",
-                    15,
-                    20,
-                    2,
-                    0)
+                    Text_Settings(text = "Размер шрифта: $sliderPosition", size = sliderPosition, family = SpinnerText,Modifier.padding(start = 15.dp,top = 20.dp,end = 0.dp,bottom = 2.dp).fillMaxWidth())
 
-                Slider(value = sliderPosition,
-                    onValueChange = {
-                        sliderPosition = it
-                    },
-                    valueRange = 10f..20f,
-                    colors = SliderDefaults.colors(
-                        thumbColor = Color.Red,
-                        activeTrackColor = Color.Blue,
-                        inactiveTrackColor = Color.Gray
-                    ),
-                    steps = 8,
-                    modifier = Modifier
-                        .padding(start = 15.dp,bottom = 2.dp,top = 2.dp)
-                )
+                    Slider(value = sliderPosition,
+                        onValueChange = {
+                            sliderPosition = it
+                        },
+                        valueRange = 10f..20f,
+                        colors = SliderDefaults.colors(
+                            thumbColor = Color(0xFF000000),
+                            activeTrackColor = Color(0xFF2C2B2B),
+                            inactiveTrackColor = Color.Gray
+                        ),
+                        steps = 8,
+                        modifier = Modifier
+                            .padding(start = 15.dp,bottom = 2.dp,top = 2.dp)
+                    )
 
-                Text_Settings(text = "Стиль шрифта:", size = sliderPosition, family = "",
-                    15,
-                    2,
-                    2,
-                    0)
+                    SpinnerText =  CountrySelection()
+                }
+                Row(modifier = Modifier
+                    .clip(RoundedCornerShape(30.dp))
+                    .fillMaxWidth()
+                    .padding(5.dp)
+                    .background(color = Gray_20)
+                ){
 
-                CountrySelection()
+                    Text_Settings_Color(text = "Сменить аккаунт", size = sliderPosition,
+                        family = SpinnerText,
+                        Modifier.padding(start = 15.dp,top = 20.dp,end = 0.dp,bottom = 20.dp).fillMaxWidth(), Color.Red)
+                }
             }
         }
     }
@@ -117,6 +123,8 @@ fun Greeting() {
 @Composable
 fun DefaultPreview() {
     WorldskillsShopTheme {
+
         Greeting()
+
     }
 }

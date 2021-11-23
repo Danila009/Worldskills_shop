@@ -127,11 +127,6 @@ class adapter_cards(contextM: Context) : RecyclerView.Adapter<adapter_cards.Card
         return CardList.size
     }
 
-    fun removaItem(pos:Int){
-        CardList.removeAt(pos)
-        notifyItemRangeChanged(0,CardList.size)
-        notifyItemRemoved(pos)
-    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun addCard(card: bank_cards){

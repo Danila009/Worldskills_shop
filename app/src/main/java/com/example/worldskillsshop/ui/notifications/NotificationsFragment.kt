@@ -18,7 +18,6 @@ import androidx.fragment.app.findFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.example.worldskillsshop.Intent
 import com.example.worldskillsshop.R
 import com.example.worldskillsshop.addingAdsA
 import com.example.worldskillsshop.databinding.FragmentNotificationsBinding

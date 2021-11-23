@@ -36,7 +36,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import androidx.activity.compose.setContent
-
+import com.example.worldskillsshop.openAdsA
 
 
 class HomeFragment : Fragment() {
@@ -122,7 +122,7 @@ class HomeFragment : Fragment() {
         DbManagerUser = UserDBManager(thiscontext!!)
 
             binding.floatingActionButton.setOnClickListener {
-            com.example.worldskillsshop.Intent().open(thiscontext!!)
+                openAdsA(thiscontext!!)
         }
         return (root)
     }
@@ -412,6 +412,7 @@ class HomeFragment : Fragment() {
         myDbManager?.closeDb()
         super.onDestroy()
     }
+
 
 
     @SuppressLint("UseRequireInsteadOfGet")

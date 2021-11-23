@@ -1,18 +1,14 @@
 package com.example.worldskillsshop
 
 import android.content.Context
-import android.content.Intent.ACTION_DIAL
-import android.net.Uri
-import android.view.View
-import android.widget.SearchView
-import androidx.appcompat.view.menu.ActionMenuItemView
-import androidx.core.content.ContextCompat.startActivity
+import com.example.worldskillsshop.ui.notifications.NotificationsFragment
 
-class Intent {
+fun openAdsA(con:Context){
+    val Intent = android.content.Intent(con, addingAdsA::class.java)
+    con.startActivity(Intent)
+}
 
-    fun open(con:Context){
-        val Intent = android.content.Intent(con, addingAdsA::class.java).apply{
-        }
-        con.startActivity(Intent)
-    }
+fun openHome(con:Context){
+    val Intent = android.content.Intent(con, NotificationsFragment::class.java)
+    con.startActivity(Intent)
 }

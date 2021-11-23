@@ -15,7 +15,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.worldskillsshop.MainActivity
 import com.example.worldskillsshop.R
 import com.example.worldskillsshop.adapter_RV.adapter_basket
@@ -71,11 +73,28 @@ class DashboardFragment : Fragment() {
         return root
     }
 
+    fun delete():ItemTouchHelper{
+
+        return ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                adapter.removeItem(viewHolder.adapterPosition,ID,Db!!)
+                Log.d("sfssd",dbDate("Id").toString())
+            }
+        })
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         var Id:Int = ID.size-1
-        Log.d("sdfss",Id.toString())
 
         while (Id != 0){
 
@@ -89,6 +108,9 @@ class DashboardFragment : Fragment() {
 
         binding.recyclerView3.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         binding.recyclerView3.adapter = adapter
+
+        val swapHelper = delete()
+        swapHelper.attachToRecyclerView(binding.recyclerView3)
 
         val card = basket(description,productPhoto,titleAnnouncement,price)
         adapter.addCard(card)

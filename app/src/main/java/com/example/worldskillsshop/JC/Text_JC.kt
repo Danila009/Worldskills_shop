@@ -1,25 +1,31 @@
 package com.example.worldskillsshop.JC
 
-import androidx.compose.foundation.layout.padding
+import android.annotation.SuppressLint
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Text_Settings(text:String,size:Float,family:String,
-                  start:Int,
-                  top:Int,
-                  bottom:Int,
-                  end:Int) {
-
+fun Text_Settings(text:String, size:Float, family:FontFamily, @SuppressLint("ModifierParameter") modifier: Modifier = Modifier) {
 
     Text(text = text,
-        modifier = Modifier
-            .padding(start = start.dp,bottom = bottom.dp,top = top.dp,end = end.dp),
+        modifier,
         color = Color.White,
         fontSize = size.sp,
-        fontFamily = null)
+        fontFamily = family
+    )
+}
+
+@Composable
+fun Text_Settings_Color(text:String, size:Float, family:FontFamily, @SuppressLint("ModifierParameter") modifier: Modifier = Modifier,color: Color) {
+
+    Text(text = text,
+        modifier,
+        color = color,
+        fontSize = size.sp,
+        fontFamily = family
+    )
 }

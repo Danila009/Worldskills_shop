@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import android.provider.BaseColumns
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -18,8 +19,8 @@ class BasketDBManager(context: Context) {
     }
 
     suspend fun insertDb(COLUMN_titleADS:String, PriceADS:String, Description:String, Phone: String,
-                 AddImage:String, AddImage_1:String, AddImage_2:String, AddImage_3:String,
-                 Time:String, Viewing:String) = withContext(Dispatchers.IO){
+                         AddImage:String, AddImage_1:String, AddImage_2:String, AddImage_3:String,
+                         Time:String, Viewing:String) = withContext(Dispatchers.IO){
 
         val values = ContentValues().apply {
 
@@ -75,6 +76,13 @@ class BasketDBManager(context: Context) {
         }
         cursor.close()
         return dataList
+    }
+
+
+     fun removeDb(id:String){
+
+         val selection = BaseColumns._ID+"=$id"
+        db?.delete(BasketDBNameClass.TABLE_NAME,selection,null)
     }
 
     fun closeDb(){
